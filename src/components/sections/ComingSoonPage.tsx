@@ -143,7 +143,7 @@ export function ComingSoonPage() {
         {/* Full-bleed kasi / ghat background */}
         <div className="absolute inset-0" aria-hidden="true">
           <img
-            src="/assets/kaasi_background.png"
+            src="/assets/water_background.png"
             alt=""
             className="h-full w-full object-cover object-center"
             loading="lazy"
