@@ -146,6 +146,14 @@
     border: 1px solid var(--theme-border-light);
   }
 
+  /* Deepen the orange service icons toward the Figma brown,
+     plus the Figma drop shadow (X0 Y2 Blur2 black 25%).
+     Tune the brightness/saturate/hue-rotate values to taste. */
+  .icon-deepen {
+    filter: brightness(0.45) saturate(1.25) hue-rotate(-12deg)
+      drop-shadow(0 2px 2px rgba(0, 0, 0, 0.25) );
+  }
+
   .gradient-brand {
     background: var(--gradient-brand);
   }

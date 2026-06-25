@@ -34,7 +34,7 @@ export function ServiceCard({
         <img
           src={icon}
           alt=""
-          className="h-full w-full object-contain"
+          className="icon-deepen h-full w-full object-contain"
           loading="lazy"
           width={76}
           height={76}
