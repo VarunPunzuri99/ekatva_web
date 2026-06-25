@@ -19,11 +19,11 @@ function CountdownComplete() {
 
 function TimeUnit({ value, label }: { value: number; label: string }) {
   return (
-    <div className="flex flex-col items-center px-5 sm:px-7 md:px-9">
-      <span className="font-heading text-4xl font-normal text-dark tabular-nums sm:text-5xl md:text-6xl">
+    <div className="flex flex-col items-center px-3 sm:px-7 md:px-9">
+      <span className="font-heading text-3xl font-normal text-dark tabular-nums sm:text-5xl md:text-6xl">
         {String(value).padStart(2, "0")}
       </span>
-      <span className="mt-2 font-ui text-[0.65rem] font-medium tracking-[0.25em] text-primary uppercase md:text-xs">
+      <span className="mt-2 font-ui text-[0.6rem] font-medium tracking-[0.2em] text-primary uppercase sm:text-[0.65rem] sm:tracking-[0.25em] md:text-xs">
         {label}
       </span>
     </div>

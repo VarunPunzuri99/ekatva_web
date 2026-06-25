@@ -50,7 +50,7 @@ export function ComingSoonPage() {
       {/* ══════════════════════════════════════════════════════
           UPPER ZONE — misty temple background, content on top
       ══════════════════════════════════════════════════════ */}
-      <div className="relative">
+      <div className="relative overflow-hidden">
         {/* Full-bleed temple background */}
         <div className="pointer-events-none absolute inset-0" aria-hidden="true">
           <img
@@ -75,26 +75,26 @@ export function ComingSoonPage() {
           src="/assets/bells.png"
           alt=""
           aria-hidden="true"
-          className="pointer-events-none absolute top-0 right-4 z-20 w-52 sm:right-8 sm:w-64 md:right-12 md:w-80 lg:right-20 lg:w-96"
+          className="pointer-events-none absolute -top-1 right-0 z-20 w-24 sm:top-0 sm:right-6 sm:w-44 md:right-12 md:w-72 lg:right-20 lg:w-96"
         />
 
         {/* ── Hero content ── */}
         <section
           aria-labelledby="hero-heading"
-          className="relative z-10 mx-auto max-w-6xl px-4 pt-10 text-center md:pt-16 lg:pt-20"
+          className="relative z-10 mx-auto max-w-6xl px-4 pt-12 text-center sm:pt-10 md:pt-16 lg:pt-20"
         >
           <Logo className="mb-6 md:mb-8" />
 
           <h1
             id="hero-heading"
-            className="font-heading text-xl font-medium tracking-[0.3em] text-dark uppercase md:text-2xl lg:text-3xl"
+            className="font-heading text-lg font-medium tracking-[0.2em] text-dark uppercase sm:text-xl sm:tracking-[0.3em] md:text-2xl lg:text-3xl"
           >
             Is Coming Soon
           </h1>
 
           <SacredOrnament className="my-5 md:my-7" />
 
-          <p className="mx-auto max-w-md font-body text-lg leading-relaxed text-text-muted md:text-xl">
+          <p className="mx-auto max-w-md font-body text-base leading-relaxed text-text-muted sm:text-lg md:text-xl">
             A sacred journey towards peace, prosperity and spiritual harmony.
           </p>
 
