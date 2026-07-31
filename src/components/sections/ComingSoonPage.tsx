@@ -1,89 +1,56 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { ServiceCard } from "@/components/sections/ServiceCard";
 import { CountdownTimer } from "@/components/sections/CountdownTimer";
+import { LaunchAccessModal } from "@/components/sections/LaunchAccessModal";
 import { SubscribeForm } from "@/components/sections/SubscribeForm";
 import { TrustBar } from "@/components/sections/TrustBar";
 import { SacredOrnament } from "@/components/common/SacredOrnament";
 import { Logo } from "@/components/common/Logo";
+import { LEGAL_NAV } from "@/content/legalNav";
+import { SERVICES } from "@/content/services";
+import { hasReachedLaunch } from "@/lib/constants";
 
-const services = [
-  {
-    icon: "/assets/service-book-pandit.png",
-    title: "Book Pandit",
-    description:
-      "Book experienced and verified Pandits for your pujas, homas and rituals.",
-  },
-  {
-    icon: "/assets/service-puja.png",
-    title: "ePuja",
-    description:
-      "Participate in sacred pujas from anywhere and receive divine blessings.",
-  },
-  {
-    icon: "/assets/service-astrology.png",
-    title: "Astrology",
-    description:
-      "Consult with expert astrologers for guidance on life's important decisions.",
-  },
-  {
-    icon: "/assets/service-japa.png",
-    title: "Japa",
-    description:
-      "Book Japa services for peace, health, prosperity and spiritual growth.",
-  },
-  {
-    icon: "/assets/service-dristi.png",
-    title: "Disti",
-    description:
-      "Remove negative energies and protect your home and loved ones.",
-  },
-  {
-    icon: "/assets/service-horoscope.png",
-    title: "Horoscope",
-    description:
-      "Get accurate horoscope readings and insights about your future.",
-  },
-];
+/** Artwork 1169×1345 — full-bleed width, complete image (no crop) */
+const LANDING_MIN_HEIGHT = "max(100vh, calc(100vw * 1345 / 1169))";
 
 export function ComingSoonPage() {
+  const [launchOpen, setLaunchOpen] = useState(false);
+  const [launched, setLaunched] = useState(() => hasReachedLaunch());
+
   return (
-    <div className="min-h-screen">
-      {/* ══════════════════════════════════════════════════════
-          UPPER ZONE — misty temple background, content on top
-      ══════════════════════════════════════════════════════ */}
-      <div className="relative overflow-hidden">
-        {/* Full-bleed temple background */}
-        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-          <img
-            src="/assets/temple_background.png"
-            alt=""
-            className="h-full w-full object-cover object-center"
-            loading="eager"
-            fetchPriority="high"
-          />
-          {/* Soft warm wash — keeps temple visible, content readable */}
-          <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(120% 80% at 50% 30%, color-mix(in srgb, var(--theme-background) 78%, transparent) 0%, color-mix(in srgb, var(--theme-background) 45%, transparent) 55%, color-mix(in srgb, var(--theme-background) 30%, transparent) 100%)",
-            }}
-          />
-        </div>
-
-        {/* Bells decoration — top right */}
+    <div
+      className="relative isolate flex w-full flex-col"
+      style={{ minHeight: LANDING_MIN_HEIGHT }}
+    >
+      {/* Full-bleed landing artwork — covers left & right edges */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0"
+        aria-hidden="true"
+      >
         <img
-          src="/assets/bells.png"
+          src="/assets/landing_bg.jpeg"
           alt=""
-          aria-hidden="true"
-          className="pointer-events-none absolute -top-1 right-0 z-20 w-24 sm:top-0 sm:right-6 sm:w-44 md:right-12 md:w-72 lg:right-20 lg:w-96"
+          className="h-full w-full object-fill"
+          loading="eager"
+          fetchPriority="high"
         />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(180deg, color-mix(in srgb, var(--theme-background) 20%, transparent) 0%, transparent 28%, transparent 58%, rgba(40, 22, 10, 0.35) 78%, rgba(30, 16, 8, 0.55) 100%)",
+          }}
+        />
+      </div>
 
-        {/* ── Hero content ── */}
+      <div className="relative z-10 flex flex-1 flex-col">
+        {/* ── Hero ── */}
         <section
           aria-labelledby="hero-heading"
-          className="relative z-10 mx-auto max-w-6xl px-4 pt-12 text-center sm:pt-10 md:pt-16 lg:pt-20"
+          className="mx-auto w-full max-w-6xl px-4 pt-5 text-center sm:pt-6 md:pt-8 lg:pt-10"
         >
-          <Logo className="mb-6 md:mb-8" />
+          <Logo className="mb-3 md:mb-5" />
 
           <h1
             id="hero-heading"
@@ -92,34 +59,35 @@ export function ComingSoonPage() {
             Is Coming Soon
           </h1>
 
-          <SacredOrnament className="my-5 md:my-7" />
+          <SacredOrnament className="my-4 md:my-5" />
 
-          <p className="mx-auto max-w-md font-body text-base leading-relaxed text-text-muted sm:text-lg md:text-xl">
+          <p className="mx-auto max-w-md font-body text-base leading-relaxed text-text-muted sm:text-lg md:max-w-none md:whitespace-nowrap md:text-xl">
             A sacred journey towards peace, prosperity and spiritual harmony.
           </p>
 
           <button
             type="button"
-            onClick={() =>
-              document.getElementById("subscribe")?.scrollIntoView({ behavior: "smooth" })
-            }
-            className="mt-8 rounded-full bg-primary-light px-10 py-3 font-ui text-sm font-bold tracking-[0.12em] text-dark uppercase shadow-lg shadow-primary/25 transition-transform hover:scale-[1.03] md:mt-10 md:px-12 md:py-3.5 md:text-base"
+            onClick={() => setLaunchOpen(true)}
+            className="mt-6 rounded-full bg-primary-light px-8 py-3 font-ui text-sm font-bold tracking-[0.12em] text-dark uppercase shadow-lg shadow-primary/25 transition-transform hover:scale-[1.03] sm:px-10 md:mt-8 md:px-12 md:py-3.5 md:text-base"
           >
-            Launching Soon
+            {launched ? "Launch" : "Launching Soon"}
           </button>
 
-          <CountdownTimer />
+          <CountdownTimer
+            className="py-4 md:py-5"
+            onComplete={() => setLaunched(true)}
+          />
         </section>
 
-        {/* ── Services heading (stays on temple background) ── */}
+        {/* ── Services intro ── */}
         <section
           aria-labelledby="services-heading"
-          className="relative z-10 mx-auto max-w-6xl px-4 pb-28 pt-2 text-center md:pb-40 md:pt-6"
+          className="mx-auto w-full max-w-6xl px-4 pt-1 text-center md:pt-2"
         >
           <p className="font-heading text-sm font-medium tracking-[0.28em] text-dark uppercase md:text-base">
             Our Services
           </p>
-          <SacredOrnament className="my-4 md:my-5" />
+          <SacredOrnament className="my-3 md:my-4" />
 
           <h2
             id="services-heading"
@@ -128,64 +96,71 @@ export function ComingSoonPage() {
             Spiritual Solutions. For every one
           </h2>
 
-          <p className="mx-auto mt-3 max-w-xl font-body text-sm leading-relaxed text-text-muted md:text-base">
+          <p className="mx-auto mt-2 max-w-xl font-body text-sm leading-relaxed text-text-muted md:mt-3 md:text-base">
             Ekatva brings traditional wisdom and spiritual services to your
             fingertips. Stay tuned for a divine experience.
           </p>
         </section>
-      </div>
 
-      {/* ══════════════════════════════════════════════════════
-          LOWER ZONE — kasi ghat background
-          Cards straddle the boundary (top on temple, bottom here)
-      ══════════════════════════════════════════════════════ */}
-      <section id="services" className="relative pt-px">
-        {/* Full-bleed kasi / ghat background */}
-        <div className="absolute inset-0" aria-hidden="true">
-          <img
-            src="/assets/water_background.png"
-            alt=""
-            className="h-full w-full object-cover object-center"
-            loading="lazy"
-          />
-        </div>
-
-        {/* Content layer */}
-        <div className="relative z-10 px-4">
-          {/* Service cards — pulled up to overlap the temple zone */}
-          <div className="mx-auto -mt-20 grid max-w-6xl grid-cols-2 items-stretch gap-3 sm:gap-4 md:grid-cols-3 md:-mt-28 lg:grid-cols-6 lg:gap-4">
-            {services.map((service) => (
+        {/* ── Cards + trust ── */}
+        <section id="services" className="w-full px-4 pt-6 md:pt-8 lg:pt-10">
+          <div className="mx-auto grid max-w-6xl grid-cols-2 items-stretch gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 xl:gap-3">
+            {SERVICES.map((service) => (
               <ServiceCard key={service.title} {...service} />
             ))}
           </div>
 
-          {/* Trust badges */}
-          <div className="mt-10 md:mt-14">
+          <div className="mt-8 md:mt-10 lg:mt-12">
             <TrustBar />
           </div>
+        </section>
 
-          {/* Subscribe */}
-          <footer
-            id="subscribe"
-            aria-labelledby="subscribe-heading"
-            className="mx-auto mt-14 max-w-2xl pb-16 text-center md:mt-20 md:pb-20"
+        {/* ── Subscribe — bottom of artwork ── */}
+        <footer
+          id="subscribe"
+          aria-labelledby="subscribe-heading"
+          className="mx-auto mt-auto w-full max-w-2xl px-4 pb-8 pt-10 text-center md:pb-10 md:pt-14 lg:pb-12 lg:pt-16"
+        >
+          <h2
+            id="subscribe-heading"
+            className="font-body text-3xl font-medium text-white [text-shadow:0_2px_12px_rgba(0,0,0,0.45)] md:text-5xl"
           >
-            <h2
-              id="subscribe-heading"
-              className="font-body text-3xl font-medium text-text-light md:text-5xl"
-            >
-              Be the first to know
-            </h2>
-            <p className="mx-auto mt-4 max-w-md font-body text-lg leading-snug text-text-light md:text-xl">
-              Subscribe to get updates, launch alerts and exclusive early access.
-            </p>
-            <SubscribeForm className="mt-8 md:mt-10" />
-            <p className="mt-10 font-ui text-xs text-text-light/65">
-              &copy; 2026 Ekatva. All Rights Reserved.
-            </p>
-          </footer>
-        </div>
-      </section>
+            Be the first to know
+          </h2>
+          <p className="mx-auto mt-3 max-w-md font-body text-lg leading-snug text-white/95 [text-shadow:0_1px_8px_rgba(0,0,0,0.4)] md:mt-4 md:text-xl">
+            Subscribe to get updates, launch alerts and exclusive early access.
+          </p>
+          <SubscribeForm className="mt-6 md:mt-8" light />
+          <nav
+            aria-label="Legal policies"
+            className="mt-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 md:mt-10"
+          >
+            {LEGAL_NAV.map((item, index) => (
+              <span key={item.path} className="flex items-center gap-3">
+                {index > 0 && (
+                  <span className="text-white/40" aria-hidden="true">
+                    ·
+                  </span>
+                )}
+                <Link
+                  to={item.path}
+                  className="font-ui text-xs text-white/85 transition-colors hover:text-primary-light [text-shadow:0_1px_6px_rgba(0,0,0,0.35)]"
+                >
+                  {item.label}
+                </Link>
+              </span>
+            ))}
+          </nav>
+          <p className="mt-3 font-ui text-xs text-white/70 [text-shadow:0_1px_6px_rgba(0,0,0,0.35)]">
+            &copy; 2026 Ekatva. All Rights Reserved.
+          </p>
+        </footer>
+      </div>
+
+      <LaunchAccessModal
+        open={launchOpen}
+        onClose={() => setLaunchOpen(false)}
+      />
     </div>
   );
 }

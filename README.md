@@ -54,4 +54,4 @@ public/assets/        # Images and logo
 
 ## Launch
 
-Countdown targets **July 5, 2026 00:00:00 IST**.
+Countdown targets **August 28, 2026 00:00:00 IST**.

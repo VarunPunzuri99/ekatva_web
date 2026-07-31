@@ -40,7 +40,7 @@ export function ServiceCard({
           height={76}
         />
       </div>
-      <h3 className="font-ui text-[0.7rem] font-bold tracking-widest text-text-light uppercase md:text-sm">
+      <h3 className="font-ui text-[0.7rem] font-bold tracking-widest text-text-light md:text-sm">
         {title}
       </h3>
       <p className="mt-2 font-body text-xs leading-relaxed text-text-light/90 md:text-sm">

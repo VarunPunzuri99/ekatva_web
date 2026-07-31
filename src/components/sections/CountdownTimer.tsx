@@ -2,8 +2,10 @@ import Countdown from "react-countdown";
 import { LAUNCH_DATE } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
-interface CountdownTimerProps {
+export interface CountdownTimerProps {
   className?: string;
+  /** Fires once when the launch date is reached (or already past). */
+  onComplete?: () => void;
 }
 
 function CountdownComplete() {
@@ -39,11 +41,12 @@ function Separator() {
   );
 }
 
-export function CountdownTimer({ className }: CountdownTimerProps) {
+export function CountdownTimer({ className, onComplete }: CountdownTimerProps) {
   return (
     <div className={cn("flex justify-center py-6 md:py-8", className)}>
       <Countdown
         date={LAUNCH_DATE}
+        onComplete={onComplete}
         renderer={({ days, hours, minutes, seconds, completed }) => {
           if (completed) return <CountdownComplete />;
 

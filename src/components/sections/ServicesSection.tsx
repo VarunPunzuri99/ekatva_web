@@ -7,39 +7,45 @@ import { fadeUp, staggerContainer } from "@/lib/animations";
 const services = [
   {
     icon: "/assets/service-book-pandit.png",
-    title: "Book Pandit",
+    title: "BOOK PANDIT",
     description:
       "Book experienced and verified Pandits for your pujas, homas and rituals.",
   },
   {
     icon: "/assets/service-puja.png",
-    title: "Puja",
+    title: "EPUJA",
     description:
       "Participate in sacred pujas from anywhere and receive divine blessings.",
   },
   {
     icon: "/assets/service-astrology.png",
-    title: "Astrology",
+    title: "ASTROGURU",
     description:
       "Consult with expert astrologers for guidance on life's important decisions.",
   },
   {
     icon: "/assets/service-japa.png",
-    title: "Japa",
+    title: "eJAPA",
     description:
       "Book Japa services for peace, health, prosperity and spiritual growth.",
   },
   {
     icon: "/assets/service-dristi.png",
-    title: "Dristi",
+    title: "eDISTI",
     description:
       "Remove negative energies and protect your home and loved ones.",
   },
   {
     icon: "/assets/service-horoscope.png",
-    title: "Horoscope",
+    title: "ePRADAKSHINA",
     description:
-      "Get accurate horoscope readings and insights about your future.",
+      "A sacred way to express devotion through every virtual step.",
+  },
+  {
+    icon: "/assets/eWish.png",
+    title: "eWish",
+    description:
+      "Offer your wish with faith and receive personalized spiritual guidance.",
   },
 ];
 
@@ -74,7 +80,7 @@ export function ServicesSection() {
 
           <motion.div
             variants={fadeUp}
-            className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6"
+            className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-7"
           >
             {services.map((service) => (
               <ServiceCard key={service.title} {...service} />

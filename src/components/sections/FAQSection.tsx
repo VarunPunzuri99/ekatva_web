@@ -18,12 +18,12 @@ const faqs = [
   {
     question: "When does Ekatva launch?",
     answer:
-      "Ekatva officially launches on July 5, 2026 at midnight IST. Subscribe to our newsletter to receive launch alerts and exclusive early access.",
+      "Ekatva officially launches on August 28, 2026 at midnight IST. Subscribe to our newsletter to receive launch alerts and exclusive early access.",
   },
   {
     question: "What services will be available?",
     answer:
-      "At launch, Ekatva will offer Book Pandit, Puja, Astrology, Japa, Dristi, and Horoscope services — covering the full spectrum of spiritual needs for individuals and families.",
+      "At launch, Ekatva will offer Book Pandit, ePuja, AstroGuru, eJapa, eDisti, ePradakshina, and eWish services — covering the full spectrum of spiritual needs for individuals and families.",
   },
   {
     question: "Is Ekatva free?",

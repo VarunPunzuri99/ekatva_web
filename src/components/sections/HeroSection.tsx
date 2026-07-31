@@ -86,7 +86,7 @@ export function HeroSection() {
 
           <motion.div variants={fadeUp} className="mt-6">
             <span className="inline-flex items-center rounded-full border border-primary/30 bg-surface/60 px-5 py-2 font-ui text-xs font-semibold tracking-wider text-primary uppercase backdrop-blur-sm">
-              Launching July 5, 2026
+              Launching August 28, 2026
             </span>
           </motion.div>
 

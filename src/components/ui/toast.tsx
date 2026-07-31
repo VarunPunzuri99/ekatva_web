@@ -30,8 +30,9 @@ const Toast = React.forwardRef<
     ref={ref}
     className={cn(
       "group pointer-events-auto relative flex w-full items-center justify-between space-x-4 overflow-hidden rounded-xl border p-4 shadow-lg transition-all data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)] data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=move]:transition-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-top-full data-[state=open]:sm:slide-in-from-bottom-full",
-      variant === "success" && "border-success/30 bg-surface text-text",
-      variant === "error" && "border-error/30 bg-surface text-text",
+      variant === "success" &&
+        "border-primary/40 bg-surface text-dark shadow-lg shadow-primary/15",
+      variant === "error" && "border-error/40 bg-surface text-dark shadow-lg",
       variant === "default" && "glass-card text-text",
       className,
     )}
