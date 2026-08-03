@@ -1,8 +1,12 @@
 import { m } from "framer-motion";
 import kundaArt from "@/assets/images/kunda_pic.png";
-import { RitualGlyph } from "@/components/book-pandit/RitualIcons";
 import { BOOK_PANDIT_RITUALS } from "@/content/bookPanditRituals";
-import { fadeUp, staggerContainer, viewportOnce } from "@/lib/animations";
+import {
+  easeOutExpo,
+  fadeUp,
+  staggerContainer,
+  viewportOnce,
+} from "@/lib/animations";
 
 export function RitualsBookSection() {
   return (
@@ -64,18 +68,34 @@ export function RitualsBookSection() {
             viewport={viewportOnce}
           >
             {BOOK_PANDIT_RITUALS.map((ritual) => (
-              <m.li key={ritual.id} variants={fadeUp} className="list-none">
-                <article className="group flex h-full flex-col items-center rounded-[12px] border border-[#F0DCC4] bg-[#FFF8EE] px-3 py-5 text-center shadow-[0_2px_8px_rgba(128,27,27,0.04)] transition-[transform,box-shadow,border-color,background-color] duration-300 hover:-translate-y-0.5 hover:border-[#E8C9A0] hover:bg-[#FFF3E0] hover:shadow-[0_8px_20px_rgba(128,27,27,0.08)] sm:px-4 sm:py-5">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-[10px] bg-white shadow-[0_1px_3px_rgba(0,0,0,0.06)] sm:h-12 sm:w-12">
-                    <RitualGlyph
-                      icon={ritual.icon}
-                      className="h-[22px] w-[22px] text-[#C45A3A] sm:h-6 sm:w-6"
+              <m.li key={ritual.id} variants={fadeUp} className="list-none h-full">
+                <m.article
+                  className="group flex h-full flex-col overflow-hidden rounded-[14px] border border-[#E8C9A0]/80 bg-white shadow-[0_4px_16px_rgba(128,27,27,0.06)] transition-[box-shadow] duration-300"
+                  whileHover={{
+                    y: -5,
+                    boxShadow: "0 14px 32px rgba(128,27,27,0.12)",
+                  }}
+                  transition={{ duration: 0.35, ease: easeOutExpo }}
+                >
+                  <div className="relative aspect-[5/4] overflow-hidden bg-[#F5E6D3] sm:aspect-[4/3]">
+                    <img
+                      src={ritual.image}
+                      alt=""
+                      className={`h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04] ${ritual.imageClassName ?? ""}`}
+                      style={{
+                        objectPosition: ritual.focus ?? "center top",
+                      }}
+                      loading="lazy"
+                    />
+                    <div
+                      className="pointer-events-none absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-black/20 to-transparent"
+                      aria-hidden="true"
                     />
                   </div>
-                  <p className="mt-3 font-home text-[12px] leading-snug font-medium text-[#444444] sm:text-[13px]">
+                  <p className="px-2.5 py-3 text-center font-home text-[11px] leading-snug font-semibold text-[#5C2A1A] sm:px-3 sm:text-[12px] lg:text-[13px]">
                     {ritual.label}
                   </p>
-                </article>
+                </m.article>
               </m.li>
             ))}
           </m.ul>
