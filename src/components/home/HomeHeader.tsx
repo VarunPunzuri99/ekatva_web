@@ -76,18 +76,37 @@ export function HomeHeader() {
           aria-label="Primary"
           className="hidden items-center gap-5 lg:flex xl:gap-6"
         >
-          {HOME_NAV.map((item, index) => {
-            const href = onHome ? item.href : `/${item.href}`;
-            const active = index === 0;
+          {HOME_NAV.map((item) => {
+            const isRoute = item.href.startsWith("/");
+            const href = isRoute
+              ? item.href
+              : onHome
+                ? item.href
+                : `/${item.href}`;
+            const active = isRoute && pathname === item.href;
+
+            if (isRoute) {
+              return (
+                <Link
+                  key={item.href}
+                  to={item.href}
+                  data-active={active ? "true" : "false"}
+                  className={cn(
+                    "nav-link-underline font-home text-[13px] font-medium text-home-text transition-colors hover:text-home-orange",
+                    active && "text-home-orange",
+                  )}
+                >
+                  {item.label}
+                </Link>
+              );
+            }
+
             return (
               <a
                 key={item.href}
                 href={href}
-                data-active={active ? "true" : "false"}
-                className={cn(
-                  "nav-link-underline font-home text-[13px] font-medium text-home-text transition-colors hover:text-home-orange",
-                  active && "text-home-orange",
-                )}
+                data-active="false"
+                className="nav-link-underline font-home text-[13px] font-medium text-home-text transition-colors hover:text-home-orange"
               >
                 {item.label}
               </a>

@@ -5,7 +5,7 @@ import { homeAssets } from "@/assets/home";
 export const HOME_NAV = [
   { label: "Features", href: "#features" },
   { label: "Puja's & Sevas", href: "#services" },
-  { label: "Panchangam", href: "#panchangam" },
+  { label: "Panchangam", href: "/panchangam" },
   { label: "Kundli", href: "#kundli" },
   { label: "About Us", href: "#about" },
   { label: "Blog", href: "#blog" },

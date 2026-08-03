@@ -13,7 +13,7 @@ const services = [
   },
   {
     icon: "/assets/service-puja.png",
-    title: "EPUJA",
+    title: "ePUJA",
     description:
       "Participate in sacred pujas from anywhere and receive divine blessings.",
   },
@@ -43,7 +43,7 @@ const services = [
   },
   {
     icon: "/assets/eWish.png",
-    title: "eWish",
+    title: "eWISH",
     description:
       "Offer your wish with faith and receive personalized spiritual guidance.",
   },

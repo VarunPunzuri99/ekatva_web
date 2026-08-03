@@ -5,6 +5,7 @@ import { MainLayout } from "@/components/layout/MainLayout";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { Toaster } from "@/components/ui/toaster";
 import { BookPanditPage } from "@/pages/BookPanditPage";
+import { PanchangamPage } from "@/pages/PanchangamPage";
 import { RootPage } from "@/pages/RootPage";
 import { PrivacyPolicyPage } from "@/pages/PrivacyPolicyPage";
 import { TermsPage } from "@/pages/TermsPage";
@@ -31,6 +32,7 @@ function App() {
 
           <Route element={<LaunchRequiredLayout />}>
             <Route path="/book-pandit" element={<BookPanditPage />} />
+            <Route path="/panchangam" element={<PanchangamPage />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/" replace />} />

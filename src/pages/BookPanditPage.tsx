@@ -9,6 +9,9 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import panditArt from "@/assets/images/pandit.png";
+import { BookPanditHighlightsSection } from "@/components/book-pandit/BookPanditHighlightsSection";
+import { BookPanditTestimonialsSection } from "@/components/book-pandit/BookPanditTestimonialsSection";
+import { RitualsBookSection } from "@/components/book-pandit/RitualsBookSection";
 import { StoreBadge } from "@/components/home/StoreBadges";
 import {
   easeOutExpo,
@@ -19,6 +22,7 @@ import {
   staggerContainer,
   viewportOnce,
 } from "@/lib/animations";
+import { HomeAppCta } from "@/components/home/HomeAppCta";
 
 type Step = {
   title: string;
@@ -296,8 +300,10 @@ export function BookPanditPage() {
         <div className="h-[42px] bg-white sm:h-[48px] lg:h-[52px]" />
       </section>
 
+      <BookPanditHighlightsSection />
+
       <section
-        className="bg-white pb-12 pt-14 sm:pb-14 sm:pt-16 lg:pb-16 lg:pt-20"
+        className="bg-white pb-12 pt-6 sm:pb-14 sm:pt-8 lg:pb-16 lg:pt-10"
         aria-label="How it works"
       >
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6 lg:px-8 xl:max-w-[1320px] xl:px-16 2xl:max-w-[1440px] 2xl:px-24">
@@ -408,6 +414,9 @@ export function BookPanditPage() {
           </m.article>
         </m.div>
       </section>
+      <RitualsBookSection />
+      <BookPanditTestimonialsSection />
+      <HomeAppCta />
     </main>
   );
 }

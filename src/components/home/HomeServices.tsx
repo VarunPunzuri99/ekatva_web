@@ -23,25 +23,22 @@ export function HomeServices() {
         {SERVICES.map((service, index) => {
           const thickBottom = index % 2 === 0;
           const href = "href" in service ? service.href : undefined;
+          const borderStyle = {
+            borderLeft: `1px solid ${SOFT}`,
+            borderRight: `1px solid ${SOFT}`,
+            borderTop: thickBottom
+              ? `1px solid ${SOFT}`
+              : `5px solid ${ACCENT}`,
+            borderBottom: thickBottom
+              ? `5px solid ${ACCENT}`
+              : `1px solid ${SOFT}`,
+          } as const;
 
-          return (
-            <m.article
-              key={service.title}
-              variants={fadeUp}
-              whileHover={{ y: -8, scale: 1.02 }}
-              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="flex flex-col rounded-lg bg-[#FFF9F3] px-3 py-5 text-center shadow-[0_0_0_transparent] transition-shadow duration-300 hover:shadow-[0_12px_28px_rgba(226,140,68,0.16)] sm:px-3.5 sm:py-6"
-              style={{
-                borderLeft: `1px solid ${SOFT}`,
-                borderRight: `1px solid ${SOFT}`,
-                borderTop: thickBottom
-                  ? `1px solid ${SOFT}`
-                  : `5px solid ${ACCENT}`,
-                borderBottom: thickBottom
-                  ? `5px solid ${ACCENT}`
-                  : `1px solid ${SOFT}`,
-              }}
-            >
+          const cardClassName =
+            "flex h-full flex-col rounded-lg bg-[#FFF9F3] px-3 py-5 text-center shadow-[0_0_0_transparent] transition-shadow duration-300 hover:shadow-[0_12px_28px_rgba(226,140,68,0.16)] sm:px-3.5 sm:py-6";
+
+          const body = (
+            <>
               <div
                 className="mx-auto flex h-[68px] w-[68px] items-center justify-center rounded-full p-[3px] sm:h-[76px] sm:w-[76px]"
                 style={{
@@ -62,25 +59,41 @@ export function HomeServices() {
                 </div>
               </div>
 
-              <h3 className="mt-3.5 font-home text-[11px] font-bold tracking-[0.05em] text-[#8B0000] uppercase sm:text-[12px]">
+              <h3 className="mt-3.5 font-home text-[11px] font-bold tracking-[0.05em] text-[#8B0000] sm:text-[12px]">
                 {service.title}
               </h3>
               <p className="mt-2 flex-1 font-home text-[11px] leading-[1.45] text-[#555555] sm:text-[12px]">
                 {service.description}
               </p>
+              <span className="read-more-underline mt-3.5 font-home text-[12px] font-bold text-[#A0522D] transition-colors group-hover:text-[#8B4513]">
+                Read More..
+              </span>
+            </>
+          );
+
+          return (
+            <m.div
+              key={service.title}
+              variants={fadeUp}
+              whileHover={{ y: -8, scale: 1.02 }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              className="h-full"
+            >
               {href ? (
                 <Link
                   to={href}
-                  className="read-more-underline mt-3.5 font-home text-[12px] font-bold text-[#A0522D] transition-colors hover:text-[#8B4513]"
+                  className={`group ${cardClassName}`}
+                  style={borderStyle}
+                  aria-label={`${service.title}: Read more`}
                 >
-                  Read More..
+                  {body}
                 </Link>
               ) : (
-                <span className="mt-3.5 font-home text-[12px] font-bold text-[#A0522D]">
-                  Read More..
-                </span>
+                <article className={cardClassName} style={borderStyle}>
+                  {body}
+                </article>
               )}
-            </m.article>
+            </m.div>
           );
         })}
       </m.div>

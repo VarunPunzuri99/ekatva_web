@@ -31,7 +31,7 @@ export function CompactServiceCard({
           height={48}
         />
       </div>
-      <h3 className="font-ui text-[0.55rem] font-bold tracking-wider text-text-light uppercase md:text-[0.65rem] lg:text-xs">
+      <h3 className="font-ui text-[0.55rem] font-bold tracking-wider text-text-light md:text-[0.65rem] lg:text-xs">
         {title}
       </h3>
       <p className="mt-1 hidden font-body text-[0.6rem] leading-snug text-text-light/85 lg:line-clamp-3 lg:block">
