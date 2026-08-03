@@ -29,7 +29,7 @@ export function HomeHero() {
     <section
       ref={sectionRef}
       id="top"
-      className="relative overflow-hidden bg-white"
+      className="relative w-full overflow-hidden bg-white"
       aria-labelledby="home-hero-heading"
     >
       <m.div
@@ -42,18 +42,19 @@ export function HomeHero() {
         <img
           src={HERO_LANDSCAPE}
           alt=""
-          className="absolute inset-0 h-full w-full object-cover object-[58%_42%] xl:object-[62%_40%]"
+          className="absolute inset-0 h-full w-full min-w-full object-cover object-center"
         />
 
+        {/* Soft left wash for text readability — temple stays visible full-bleed */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(90deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.9) 26%, rgba(255,250,240,0.45) 46%, rgba(255,248,235,0.12) 58%, rgba(255,255,255,0) 68%)",
+              "linear-gradient(90deg, rgba(255,255,255,0.82) 0%, rgba(255,252,245,0.55) 18%, rgba(255,248,235,0.22) 34%, rgba(255,248,235,0.06) 48%, transparent 62%)",
           }}
         />
 
-        <div className="absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-white/50 to-transparent" />
+        <div className="absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-white/35 to-transparent" />
         <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white to-transparent" />
       </m.div>
 
