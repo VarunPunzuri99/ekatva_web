@@ -12,35 +12,41 @@ export const SERVICES = [
     title: "ePUJA",
     description:
       "Participate in sacred pujas from anywhere and receive divine blessings.",
+    href: "/epuja",
   },
   {
     icon: "/assets/service-astrology.png",
     title: "ASTROGURU",
     description:
       "Consult with expert astrologers for guidance on life's important decisions.",
+    href: "/astroguru",
   },
   {
     icon: "/assets/service-japa.png",
     title: "eJAPA",
     description:
       "Book Japa services for peace, health, prosperity and spiritual growth.",
+    href: "/ejapa",
   },
   {
     icon: "/assets/service-dristi.png",
     title: "eDISTI",
     description:
       "Remove negative energies and protect your home and loved ones.",
+    href: "/edisti",
   },
   {
     icon: "/assets/service-horoscope.png",
     title: "ePRADAKSHINA",
     description:
       "A sacred way to express devotion through every virtual step.",
+    href: "/epradakshina",
   },
   {
     icon: "/assets/eWish.png",
     title: "eWISH",
     description:
       "Offer your wish with faith and receive personalized spiritual guidance.",
+    href: "/ewish",
   },
 ] as const;

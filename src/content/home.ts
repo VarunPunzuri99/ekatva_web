@@ -3,13 +3,12 @@ import { homeAssets } from "@/assets/home";
 /** Home page content aligned to UX mock screens. */
 
 export const HOME_NAV = [
-  { label: "Features", href: "#features" },
-  { label: "Puja's & Sevas", href: "#services" },
+  { label: "Features", href: "/features" },
+  { label: "Events", href: "/events" },
   { label: "Panchangam", href: "/panchangam" },
-  { label: "Kundli", href: "#kundli" },
-  { label: "About Us", href: "#about" },
-  { label: "Blog", href: "#blog" },
-  { label: "Contact", href: "#contact" },
+  { label: "Kundli", href: "/kundli" },
+  { label: "About Us", href: "/about" },
+  { label: "Contact", href: "/contact-us" },
 ] as const;
 
 export const HOME_HELP_POINTS = [
@@ -93,35 +92,58 @@ export const HOME_EVENTS = [
   },
 ] as const;
 
-export const HOME_FOOTER_FEATURES = [
-  { label: "ePradakshina", href: "#services" },
-  { label: "eJapa", href: "#services" },
-  { label: "AstroGuru", href: "#services" },
-  { label: "ePuja", href: "#services" },
-  { label: "Book Pandit", href: "/book-pandit" },
-  { label: "eDisti", href: "#services" },
-  { label: "eWish", href: "#services" },
-] as const;
-
-export const HOME_FOOTER_ABOUT = [
-  "About Us",
-  "Our Mission",
-  "vision",
-  "Why Ekatva",
-  "Careers",
-  "Press & Media",
-  "Testimonials",
-  "Success Stories",
-  "Blog",
-  "News & Updates",
-] as const;
-
-export const HOME_FOOTER_COMPANY = [
-  { label: "Privacy Policy", path: "/privacy-policy" },
-  { label: "Terms & Conditions", path: "/terms-and-conditions" },
-  { label: "Cancellation Policy", path: "/cancellation-refund-policy" },
-  { label: "Refund Policy", path: "/cancellation-refund-policy" },
-  { label: "Cookie Policy", path: "#" },
-  { label: "Disclaimer", path: "#" },
-  { label: "Code of Conduct", path: "#" },
-] as const;
+export const HOME_FOOTER = {
+  about:
+    "Ekatva is your spiritual companion connecting you to divine services, rituals, knowledge and a community of faith.",
+  quote: "Let devotion be your path, divinity be your guide.",
+  copyright: "Copyrights © Ekatva. All rights reserved",
+  explore: [
+    { label: "Book A Pandit", href: "/book-pandit" },
+    { label: "ePradakshina", href: "/epradakshina" },
+    { label: "Astroguru", href: "/astroguru" },
+    { label: "eAstrology", href: "/kundli" },
+    { label: "eWish", href: "/ewish" },
+    { label: "Panchangam", href: "/panchangam" },
+    { label: "eDisti", href: "/edisti" },
+    { label: "eJapa", href: "/ejapa" },
+    { label: "ePuja", href: "/epuja" },
+    { label: "Events", href: "/events" },
+  ],
+  helpful: [
+    { label: "About us", href: "/about" },
+    { label: "Terms & Conditions", href: "/terms-and-conditions" },
+    { label: "Privacy Policy", href: "/privacy-policy" },
+    { label: "Refund & Cancellation", href: "/cancellation-refund-policy" },
+    { label: "FAQ", href: "/faq" },
+    { label: "Contact Us", href: "/contact-us" },
+  ],
+  support: {
+    phone: "+91 6303515006",
+    phoneHref: "tel:+916303515006",
+    email: "connect@ekatva.online",
+    emailHref: "mailto:connect@ekatva.online",
+    hours: "Mon - Sat: 6:00 AM - 9:00 PM",
+    address:
+      "Plot # 37 & 38, Serinity Square, Madhapur, Hyderabad, Telangana 500081",
+  },
+  appStores: [
+    {
+      label: "Get it on",
+      store: "GooglePlay",
+      href: "#",
+      kind: "google" as const,
+    },
+    {
+      label: "Get it on",
+      store: "App Store",
+      href: "#",
+      kind: "apple" as const,
+    },
+  ],
+  social: [
+    { label: "Facebook", href: "#", kind: "facebook" as const },
+    { label: "Instagram", href: "#", kind: "instagram" as const },
+    { label: "YouTube", href: "#", kind: "youtube" as const },
+  ],
+  payments: ["VISA", "Mastercard", "RuPay", "UPI", "Net Banking"] as const,
+} as const;

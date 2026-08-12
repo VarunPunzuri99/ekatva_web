@@ -1,4 +1,5 @@
 import { m } from "framer-motion";
+import { Link } from "react-router-dom";
 import { HOME_EVENTS } from "@/content/home";
 import { fadeUp, staggerContainer, viewportOnce } from "@/lib/animations";
 
@@ -55,12 +56,12 @@ export function HomeEvents() {
                 <p className="mt-1 font-home text-[12px] text-home-muted">
                   {event.location}
                 </p>
-                <a
-                  href="#events"
+                <Link
+                  to="/events"
                   className="read-more-underline mt-3 inline-block font-home text-[13px] font-medium text-home-orange"
                 >
                   View details →
-                </a>
+                </Link>
               </div>
             </m.article>
           ))}

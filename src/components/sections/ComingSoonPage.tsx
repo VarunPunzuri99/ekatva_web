@@ -131,9 +131,21 @@ export function ComingSoonPage() {
             Subscribe to get updates, launch alerts and exclusive early access.
           </p>
           <SubscribeForm className="mt-6 md:mt-8" light />
+          <div className="mt-8 md:mt-10">
+            <Link
+              to="/contact-us"
+              className="group relative inline-flex h-12 items-center justify-center overflow-hidden rounded-full border border-[#FFB71C]/55 bg-gradient-to-r from-[#FFB71C]/95 via-[#E8A42A] to-[#D89A2B] px-8 font-ui text-sm font-bold tracking-[0.14em] text-[#2A1608] uppercase shadow-[0_10px_32px_rgba(0,0,0,0.35),0_0_0_1px_rgba(255,255,255,0.12)_inset] transition-[transform,filter,box-shadow] hover:brightness-105 hover:shadow-[0_14px_36px_rgba(216,154,43,0.45)] active:scale-[0.98]"
+            >
+              <span
+                className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/35 to-transparent transition-transform duration-700 group-hover:translate-x-full"
+                aria-hidden="true"
+              />
+              Contact Us
+            </Link>
+          </div>
           <nav
             aria-label="Legal policies"
-            className="mt-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 md:mt-10"
+            className="mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 md:mt-8"
           >
             {LEGAL_NAV.map((item, index) => (
               <span key={item.path} className="flex items-center gap-3">

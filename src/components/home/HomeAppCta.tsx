@@ -9,7 +9,15 @@ import {
   viewportOnce,
 } from "@/lib/animations";
 
-export function HomeAppCta() {
+interface HomeAppCtaProps {
+  title?: string;
+  subtitle?: string;
+}
+
+export function HomeAppCta({
+  title = "Bring your Spiritual Journey with Ekatva today.",
+  subtitle = "Your faith. Our platform. Divine blessings.",
+}: HomeAppCtaProps) {
   return (
     <section
       id="download"
@@ -45,10 +53,10 @@ export function HomeAppCta() {
             id="app-cta-heading"
             className="font-home text-[1.75rem] font-bold leading-[1.25] tracking-tight text-[#1A1A1A] sm:text-[2rem] lg:text-[2.15rem] xl:text-[2.35rem]"
           >
-            Bring your Spiritual Journey with Ekatva today.
+            {title}
           </h2>
           <p className="mt-3 font-home text-[14px] text-[#5C5C5C] sm:text-[15px] xl:mt-4 xl:text-base">
-            Your faith. Our platform. Divine blessings.
+            {subtitle}
           </p>
         </m.div>
 
