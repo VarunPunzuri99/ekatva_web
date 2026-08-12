@@ -42,7 +42,8 @@ export function HomeEvents() {
                 <img
                   src={event.image}
                   alt={event.title}
-                  className="h-full w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+                  className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+                  style={{ objectPosition: event.focus ?? "center top" }}
                   loading="lazy"
                 />
               </div>

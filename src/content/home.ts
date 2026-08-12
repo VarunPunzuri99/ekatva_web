@@ -71,24 +71,29 @@ export const HOME_EVENTS = [
     date: "June 10, 2025 | 8:00 PM",
     location: "Live from Rameswaram",
     image: homeAssets.pournamiAbhishekam,
+    // Shift crop so moon + temple fill the card (less empty sky)
+    focus: "center 38%",
   },
   {
     title: "Shani Triyodashi Puja",
     date: "June 18, 2025 | 7:30 PM",
     location: "Live from Tirunallar",
     image: homeAssets.pournami2,
+    focus: "center top",
   },
   {
-    title: "Rahu Kethu Homam",
+    title: "Satyanarayana Puja",
     date: "June 22, 2025 | 6:00 AM",
     location: "Live from Kalahasti",
-    image: homeAssets.rahuKethu,
+    image: homeAssets.sathyanarayanaPooja,
+    focus: "center top",
   },
   {
     title: "Vaikunta Ekadashi",
     date: "July 2, 2025 | 5:00 AM",
     location: "Live from Srirangam",
     image: homeAssets.vaikuntaEkadashi,
+    focus: "center top",
   },
 ] as const;
 
