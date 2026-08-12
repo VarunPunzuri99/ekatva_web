@@ -1,11 +1,5 @@
 import { m } from "framer-motion";
-import {
-  Bell,
-  Heart,
-  Package,
-  UserCheck,
-  type LucideIcon,
-} from "lucide-react";
+import { Bell, UserCheck, type LucideIcon } from "lucide-react";
 import { EPUJA_TRUST } from "@/content/epuja";
 import {
   easeOutExpo,
