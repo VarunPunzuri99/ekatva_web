@@ -194,16 +194,16 @@ function StoreButton({
   return (
     <a
       href={href}
-      className="inline-flex items-center gap-2 rounded-md border border-[#C9C9C9] bg-white px-2.5 py-1.5 shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-colors hover:border-[#A3A3A3] sm:px-3 sm:py-2"
+      className="inline-flex min-w-0 flex-1 items-center gap-1.5 rounded-md border border-[#C9C9C9] bg-white px-2 py-1.5 shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-colors hover:border-[#A3A3A3] sm:gap-2 sm:px-2.5"
     >
       {kind === "google" ? (
-        <GooglePlayIcon className="h-5 w-5 shrink-0" />
+        <GooglePlayIcon className="h-4 w-4 shrink-0" />
       ) : (
-        <AppleIcon className="h-5 w-5 shrink-0" />
+        <AppleIcon className="h-4 w-4 shrink-0" />
       )}
-      <span className="flex flex-col leading-tight">
-        <span className="font-home text-[9px] text-[#6B7280] sm:text-[10px]">{label}</span>
-        <span className="font-home text-[12px] font-semibold text-[#1A1A1A] sm:text-[13px]">
+      <span className="flex min-w-0 flex-col leading-tight">
+        <span className="font-home text-[8px] text-[#6B7280]">{label}</span>
+        <span className="font-home truncate text-[11px] font-semibold text-[#1A1A1A]">
           {store}
         </span>
       </span>
@@ -269,7 +269,7 @@ export function HomeFooter() {
             >
               Download the Ekatva App
             </p>
-            <div className="mt-2.5 flex flex-wrap gap-2">
+            <div className="mt-2.5 flex max-w-[280px] flex-nowrap items-stretch gap-1.5">
               {HOME_FOOTER.appStores.map((store) => (
                 <StoreButton key={store.store} {...store} />
               ))}

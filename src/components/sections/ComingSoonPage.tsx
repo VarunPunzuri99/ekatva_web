@@ -8,7 +8,7 @@ import { TrustBar } from "@/components/sections/TrustBar";
 import { SacredOrnament } from "@/components/common/SacredOrnament";
 import { Logo } from "@/components/common/Logo";
 import { LEGAL_NAV } from "@/content/legalNav";
-import { SERVICES } from "@/content/services";
+import { COMING_SOON_SERVICES } from "@/content/services";
 import { hasReachedLaunch } from "@/lib/constants";
 
 /** Artwork 1169×1345 — full-bleed width, complete image (no crop) */
@@ -73,6 +73,14 @@ export function ComingSoonPage() {
             {launched ? "Launch" : "Launching Soon"}
           </button>
 
+          {!launched && (
+            <p className="mt-5 font-ui text-2xl font-bold tracking-wide text-red-600 sm:text-[1.75rem] md:mt-6 md:text-3xl">
+              <time dateTime="2026-08-28T19:00+05:30">
+                28th August 2026, Friday, 7 PM
+              </time>
+            </p>
+          )}
+
           <CountdownTimer
             className="py-4 md:py-5"
             onComplete={() => setLaunched(true)}
@@ -105,7 +113,7 @@ export function ComingSoonPage() {
         {/* ── Cards + trust ── */}
         <section id="services" className="w-full px-4 pt-6 md:pt-8 lg:pt-10">
           <div className="mx-auto grid max-w-6xl grid-cols-2 items-stretch gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 xl:gap-3">
-            {SERVICES.map((service) => (
+            {COMING_SOON_SERVICES.map((service) => (
               <ServiceCard key={service.title} {...service} />
             ))}
           </div>

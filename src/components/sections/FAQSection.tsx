@@ -18,7 +18,7 @@ const faqs = [
   {
     question: "When does Ekatva launch?",
     answer:
-      "Ekatva officially launches on August 28, 2026 at midnight IST. Subscribe to our newsletter to receive launch alerts and exclusive early access.",
+      "Ekatva officially launches on August 28, 2026 at 7 PM IST. Subscribe to our newsletter to receive launch alerts and exclusive early access.",
   },
   {
     question: "What services will be available?",

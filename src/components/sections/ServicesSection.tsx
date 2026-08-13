@@ -7,7 +7,7 @@ import { fadeUp, staggerContainer } from "@/lib/animations";
 const services = [
   {
     icon: "/assets/service-book-pandit.png",
-    title: "BOOK PANDIT",
+    title: "ePANDIT",
     description:
       "Book experienced and verified Pandits for your pujas, homas and rituals.",
   },
@@ -16,12 +16,6 @@ const services = [
     title: "ePUJA",
     description:
       "Participate in sacred pujas from anywhere and receive divine blessings.",
-  },
-  {
-    icon: "/assets/service-astrology.png",
-    title: "ASTROGURU",
-    description:
-      "Consult with expert astrologers for guidance on life's important decisions.",
   },
   {
     icon: "/assets/service-japa.png",

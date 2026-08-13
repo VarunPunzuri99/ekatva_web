@@ -1,3 +1,6 @@
+import pradakshinaArt from "@/assets/images/ePradakshina/ePradakshina_imae.png";
+import panchangamArt from "@/assets/images/panchangam_pic.png";
+
 /** Features page copy aligned to UX mock screens. */
 
 export const FEATURES_HERO = {
@@ -22,7 +25,7 @@ export const FEATURES_CTA = {
 export const FEATURES_SERVICES = [
   {
     id: "book-pandit",
-    title: "Book a Pandit",
+    title: "ePandit",
     description:
       "Book experienced and verified Pandits for your pujas, homas and rituals.",
     icon: "/assets/service-book-pandit.png",
@@ -33,12 +36,12 @@ export const FEATURES_SERVICES = [
     title: "ePradakshina",
     description:
       "A sacred way to express devotion through every virtual step.",
-    icon: "/assets/service-horoscope.png",
+    icon: pradakshinaArt,
     href: "/epradakshina",
   },
   {
     id: "eastrology",
-    title: "eAstrology",
+    title: "eAstro",
     description:
       "Get personalized kundli insights and guidance for life's important decisions.",
     icon: "/assets/eAstro.png",
@@ -61,14 +64,6 @@ export const FEATURES_SERVICES = [
     href: "/ewish",
   },
   {
-    id: "eastroguru",
-    title: "eAstroguru",
-    description:
-      "Consult with expert astrologers for clarity on life's important questions.",
-    icon: "/assets/service-astrology.png",
-    href: "/astroguru",
-  },
-  {
     id: "edisti",
     title: "eDisti",
     description:
@@ -78,10 +73,10 @@ export const FEATURES_SERVICES = [
   },
   {
     id: "panchangam",
-    title: "Panchangam",
+    title: "ePanchangam",
     description:
       "Stay aligned with accurate tithi, nakshatra and muhurtham guidance every day.",
-    icon: "/assets/service-puja.png",
+    icon: panchangamArt,
     href: "/panchangam",
   },
   {

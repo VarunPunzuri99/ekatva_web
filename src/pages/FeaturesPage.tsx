@@ -11,7 +11,7 @@ export function FeaturesPage() {
         <title>Features | Ekatva</title>
         <meta
           name="description"
-          content="Explore Ekatva features — Book Pandit, ePradakshina, eAstrology, eJapa, eWish, eAstroguru, eDisti, Panchangam and more for your spiritual journey."
+          content="Explore Ekatva features — ePandit, ePradakshina, eAstro, eJapa, eWish, eDisti, ePanchangam and more for your spiritual journey."
         />
       </Helmet>
       <main className="bg-white" style={{ backgroundColor: "#FFFFFF" }}>

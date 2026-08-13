@@ -43,10 +43,10 @@ export function AboutHero() {
           }}
         />
 
-        <div className="relative mx-auto max-w-[1200px] px-4 pt-12 sm:px-6 sm:pt-14 lg:px-8 lg:pt-16 xl:max-w-[1320px] xl:px-16 2xl:max-w-[1440px] 2xl:px-24">
+        <div className="relative mx-auto max-w-[1200px] px-4 pt-7 sm:px-6 sm:pt-8 lg:px-8 lg:pt-10 xl:max-w-[1320px] xl:px-16 2xl:max-w-[1440px] 2xl:px-24">
           <div className="grid items-end gap-6 lg:grid-cols-2 lg:gap-8">
             <m.div
-              className="max-w-lg pb-8 sm:pb-10 lg:pb-[60px]"
+              className="max-w-lg pb-5 sm:pb-6 lg:pb-8"
               variants={heroStagger}
               initial={reduceMotion ? false : "hidden"}
               animate="visible"
@@ -73,7 +73,7 @@ export function AboutHero() {
             </m.div>
 
             <div className="relative z-10 flex justify-center lg:justify-end lg:pr-10 xl:pr-14">
-              <div className="mb-[-42px] sm:mb-[-48px] lg:mb-[-52px]">
+              <div className="mb-[-28px] sm:mb-[-32px] lg:mb-[-36px]">
                 <m.div
                   className="relative z-10"
                   initial={
@@ -122,7 +122,7 @@ export function AboutHero() {
         transition={{ duration: 0.8, delay: 0.25, ease: easeOutExpo }}
       />
 
-      <div className="h-[42px] bg-white sm:h-[48px] lg:h-[52px]" />
+      <div className="h-[28px] bg-white sm:h-[32px] lg:h-[36px]" />
     </section>
   );
 }

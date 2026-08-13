@@ -209,20 +209,6 @@ export function LaunchAccessModal({ open, onClose }: LaunchAccessModalProps) {
               : "px-4 pt-5 pb-5 sm:px-7 sm:pt-7 sm:pb-7 md:px-9 md:pt-8 md:pb-8 lg:px-11 lg:pt-9 lg:pb-9",
           )}
         >
-          {!isCodeStep ? (
-            <motion.div
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, ease: easeOutExpo }}
-              className="shrink-0"
-            >
-              <Logo
-                className="mb-4 sm:mb-5 md:mb-6"
-                imgClassName="!h-10 sm:!h-11 md:!h-12 lg:!h-[3.35rem]"
-              />
-            </motion.div>
-          ) : null}
-
           <AnimatePresence mode="wait">
             {step === "guest" ? (
               <motion.div
@@ -231,7 +217,7 @@ export function LaunchAccessModal({ open, onClose }: LaunchAccessModalProps) {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -16 }}
                 transition={{ duration: 0.3, ease: easeOutExpo }}
-                className="grid min-h-0 flex-1 items-center gap-5 sm:gap-6 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.25fr)] md:gap-8 lg:gap-10 xl:gap-12"
+                className="grid min-h-0 flex-1 items-start gap-5 sm:gap-6 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.25fr)] md:gap-8 lg:gap-10 xl:gap-12"
               >
                 <motion.div
                   className="relative mx-auto w-full max-w-[200px] sm:max-w-[230px] md:mx-0 md:max-w-none"
@@ -239,18 +225,24 @@ export function LaunchAccessModal({ open, onClose }: LaunchAccessModalProps) {
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   transition={{ duration: 0.45, delay: 0.06, ease: easeOutExpo }}
                 >
-                  <div className="absolute -inset-2 rounded-[22px] bg-gradient-to-br from-[#F27022]/25 via-transparent to-[#FFB71C]/20 blur-md sm:-inset-2.5" />
-                  <div className="relative overflow-hidden rounded-[18px] border border-white/70 shadow-[0_18px_44px_rgba(31,41,55,0.2)] ring-1 ring-[#F27022]/12 sm:rounded-[20px]">
-                    <div className="aspect-[3/4] w-full bg-[#3D5A80]">
-                      <GuestPortrait />
+                  <Logo
+                    className="mb-3 justify-start sm:mb-4"
+                    imgClassName="!h-10 sm:!h-11 md:!h-12 lg:!h-[3.35rem]"
+                  />
+                  <div className="relative">
+                    <div className="absolute -inset-2 rounded-[22px] bg-gradient-to-br from-[#F27022]/25 via-transparent to-[#FFB71C]/20 blur-md sm:-inset-2.5" />
+                    <div className="relative overflow-hidden rounded-[18px] border border-white/70 shadow-[0_18px_44px_rgba(31,41,55,0.2)] ring-1 ring-[#F27022]/12 sm:rounded-[20px]">
+                      <div className="aspect-[3/4] w-full bg-[#3D5A80]">
+                        <GuestPortrait />
+                      </div>
+                      <div
+                        className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3"
+                        style={{
+                          background:
+                            "linear-gradient(180deg, transparent 0%, rgba(26,12,6,0.35) 100%)",
+                        }}
+                      />
                     </div>
-                    <div
-                      className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3"
-                      style={{
-                        background:
-                          "linear-gradient(180deg, transparent 0%, rgba(26,12,6,0.35) 100%)",
-                      }}
-                    />
                   </div>
                 </motion.div>
 
@@ -304,7 +296,7 @@ export function LaunchAccessModal({ open, onClose }: LaunchAccessModalProps) {
                       onClick={() => setStep("code")}
                       className="group inline-flex h-12 w-full max-w-xs items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#F27022] via-[#EA580C] to-[#C2410C] px-8 font-home text-[14px] font-semibold tracking-wide text-white shadow-[0_12px_30px_rgba(234,88,12,0.38)] transition-[transform,box-shadow,filter] duration-300 hover:-translate-y-0.5 hover:brightness-105 hover:shadow-[0_16px_36px_rgba(234,88,12,0.45)] active:translate-y-0 sm:h-[3.25rem] sm:w-auto sm:min-w-[10.5rem] sm:text-[15px] md:justify-start"
                     >
-                      Open
+                      Launch
                       <ArrowRight
                         className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5"
                         strokeWidth={2.4}
