@@ -52,12 +52,18 @@ export function ComingSoonPage() {
         >
           <Logo className="mb-3 md:mb-5" />
 
-          <h1
-            id="hero-heading"
-            className="font-heading text-lg font-medium tracking-[0.2em] text-dark uppercase sm:text-xl sm:tracking-[0.3em] md:text-2xl lg:text-3xl"
-          >
-            Is Coming Soon
-          </h1>
+          {!launched ? (
+            <h1
+              id="hero-heading"
+              className="font-heading text-lg font-medium tracking-[0.2em] text-dark uppercase sm:text-xl sm:tracking-[0.3em] md:text-2xl lg:text-3xl"
+            >
+              Is Coming Soon
+            </h1>
+          ) : (
+            <h1 id="hero-heading" className="sr-only">
+              Ekatva
+            </h1>
+          )}
 
           <SacredOrnament className="my-4 md:my-5" />
 
