@@ -8,21 +8,14 @@ import {
   Clock,
   MapPin,
 } from "lucide-react";
-import {
-  EVENT_SORT_OPTIONS,
-  EVENTS_LIST,
-  type EventItem,
-  type EventSort,
-} from "@/content/events";
-import {
-  easeOutExpo,
-  fadeUp,
-  staggerContainer,
-  viewportOnce,
-} from "@/lib/animations";
+import { Link } from "react-router-dom";
+import { EVENT_SORT_OPTIONS, type EventSort } from "@/content/events";
+import { useOnlinePoojaEvents } from "@/hooks/useOnlinePoojaEvents";
+import { easeOutExpo, fadeUp, staggerContainer } from "@/lib/animations";
 import { cn } from "@/lib/utils";
+import type { OnlinePoojaEvent } from "@/services/onlinePooja";
 
-function EventCard({ event }: { event: EventItem }) {
+function EventCard({ event }: { event: OnlinePoojaEvent }) {
   return (
     <m.article
       variants={fadeUp}
@@ -32,16 +25,25 @@ function EventCard({ event }: { event: EventItem }) {
       }}
       className="group flex h-full flex-col overflow-hidden rounded-[14px] border border-black/[0.06] bg-white shadow-[0_4px_18px_rgba(31,41,55,0.06)] transition-shadow duration-300 hover:shadow-[0_12px_28px_rgba(31,41,55,0.1)]"
     >
-      {/* Image flush from top — tuned object-position per event */}
+      <Link
+        to={`/events/${event.id}`}
+        className="flex h-full flex-col text-inherit no-underline"
+      >
       <div className="relative h-[190px] w-full overflow-hidden bg-[#F5EDE0] sm:h-[200px]">
-        <img
-          src={event.image}
-          alt={event.title}
-          className="absolute inset-0 h-full w-full object-cover"
-          style={{ objectPosition: event.imagePosition }}
-          loading="lazy"
-          decoding="async"
-        />
+        {event.image ? (
+          <img
+            src={event.image}
+            alt={event.title}
+            className="absolute inset-0 h-full w-full object-cover"
+            style={{ objectPosition: "center top" }}
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center font-home text-[13px] text-[#9CA3AF]">
+            {event.category}
+          </div>
+        )}
         <div className="absolute top-2.5 right-2.5 z-10 flex min-w-[48px] flex-col items-center rounded-md bg-white px-2 py-1.5 text-center shadow-[0_2px_8px_rgba(0,0,0,0.12)] sm:min-w-[52px]">
           <span className="font-home text-[18px] leading-none font-bold text-[#1A1A1A] sm:text-[20px]">
             {event.day}
@@ -56,36 +58,61 @@ function EventCard({ event }: { event: EventItem }) {
         <p className="font-home text-[11px] font-medium text-[#C4A35A] sm:text-[12px]">
           {event.category}
         </p>
-        <h3 className="mt-1 font-home-display text-[15px] font-semibold leading-snug text-[#3E1F1F] sm:text-[16px]">
+        <h3 className="mt-1 font-home text-[15px] font-bold leading-snug text-home-text sm:text-[16px]">
           {event.title}
         </h3>
 
         <ul className="mt-2.5 space-y-1.5">
           <li className="flex items-start gap-2 font-home text-[12px] text-[#6B7280] sm:text-[13px]">
-            <MapPin className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#9CA3AF]" strokeWidth={2} />
+            <MapPin
+              className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#9CA3AF]"
+              strokeWidth={2}
+            />
             <span>{event.location}</span>
           </li>
           <li className="flex items-start gap-2 font-home text-[12px] text-[#6B7280] sm:text-[13px]">
-            <CalendarDays className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#9CA3AF]" strokeWidth={2} />
+            <CalendarDays
+              className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#9CA3AF]"
+              strokeWidth={2}
+            />
             <span>{event.dateLabel}</span>
           </li>
           <li className="flex items-start gap-2 font-home text-[12px] text-[#6B7280] sm:text-[13px]">
-            <Clock className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#9CA3AF]" strokeWidth={2} />
+            <Clock
+              className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#9CA3AF]"
+              strokeWidth={2}
+            />
             <span>{event.timeLabel}</span>
           </li>
         </ul>
 
         <div className="mt-auto mt-3.5 flex items-center justify-between border-t border-[#EFE7DC] pt-3">
-          <a
-            href={`#${event.id}`}
-            className="font-home text-[13px] font-medium text-[#F27022] transition-opacity hover:opacity-80"
-          >
+          <span className="font-home text-[13px] font-medium text-[#F27022]">
             View Details
-          </a>
-          <ChevronRight className="h-4 w-4 text-[#F27022]" strokeWidth={2.25} aria-hidden />
+          </span>
+          <ChevronRight
+            className="h-4 w-4 text-[#F27022] transition-transform duration-200 group-hover:translate-x-0.5"
+            strokeWidth={2.25}
+            aria-hidden
+          />
         </div>
       </div>
+      </Link>
     </m.article>
+  );
+}
+
+function EventCardSkeleton() {
+  return (
+    <div className="overflow-hidden rounded-[14px] border border-black/[0.06] bg-white shadow-[0_4px_18px_rgba(31,41,55,0.06)]">
+      <div className="h-[190px] animate-pulse bg-[#F5EDE0] sm:h-[200px]" />
+      <div className="space-y-2.5 px-3.5 py-3.5 sm:px-4 sm:py-4">
+        <div className="h-3 w-16 animate-pulse rounded bg-[#F3EDE4]" />
+        <div className="h-4 w-3/4 animate-pulse rounded bg-[#F3EDE4]" />
+        <div className="h-3 w-full animate-pulse rounded bg-[#F3EDE4]" />
+        <div className="h-3 w-2/3 animate-pulse rounded bg-[#F3EDE4]" />
+      </div>
+    </div>
   );
 }
 
@@ -99,7 +126,8 @@ function EventSortDropdown({
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
   const selected =
-    EVENT_SORT_OPTIONS.find((opt) => opt.value === value) ?? EVENT_SORT_OPTIONS[0];
+    EVENT_SORT_OPTIONS.find((opt) => opt.value === value) ??
+    EVENT_SORT_OPTIONS[0];
 
   useEffect(() => {
     if (!open) return;
@@ -178,7 +206,11 @@ function EventSortDropdown({
                   >
                     <span>{opt.label}</span>
                     {active && (
-                      <Check className="h-4 w-4 shrink-0" strokeWidth={2.4} aria-hidden />
+                      <Check
+                        className="h-4 w-4 shrink-0"
+                        strokeWidth={2.4}
+                        aria-hidden
+                      />
                     )}
                   </button>
                 </li>
@@ -193,16 +225,19 @@ function EventSortDropdown({
 
 export function EventsGrid() {
   const [sort, setSort] = useState<EventSort>("upcoming");
+  const { events: apiEvents, loading, error, refetch } = useOnlinePoojaEvents();
 
   const events = useMemo(() => {
-    const list = [...EVENTS_LIST];
+    const list = [...apiEvents];
     list.sort((a, b) =>
       sort === "upcoming"
         ? a.sortDate.localeCompare(b.sortDate)
         : b.sortDate.localeCompare(a.sortDate),
     );
     return list;
-  }, [sort]);
+  }, [apiEvents, sort]);
+
+  const showGrid = loading || (!error && events.length > 0);
 
   return (
     <section
@@ -222,17 +257,42 @@ export function EventsGrid() {
           <EventSortDropdown value={sort} onChange={setSort} />
         </div>
 
-        <m.div
-          className="mt-6 grid grid-cols-1 gap-4 sm:mt-7 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-5"
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportOnce}
-        >
-          {events.map((event) => (
-            <EventCard key={event.id} event={event} />
-          ))}
-        </m.div>
+        {error && events.length === 0 && (
+          <div className="mt-6 rounded-xl border border-[#F5D0B5] bg-[#FFF8F0] px-4 py-5 text-center sm:mt-7">
+            <p className="font-home text-[14px] text-[#6B7280]">{error}</p>
+            <button
+              type="button"
+              onClick={refetch}
+              className="mt-3 font-home text-[13px] font-semibold text-[#F27022] hover:opacity-80"
+            >
+              Try again
+            </button>
+          </div>
+        )}
+
+        {!loading && !error && events.length === 0 && (
+          <p className="mt-6 text-center font-home text-[14px] text-[#6B7280] sm:mt-7">
+            No upcoming poojas available at the moment.
+          </p>
+        )}
+
+        {showGrid && (
+          <m.div
+            key={loading ? "loading" : `events-${events.length}-${sort}`}
+            className="mt-6 grid grid-cols-1 gap-4 sm:mt-7 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-5"
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
+          >
+            {loading && events.length === 0
+              ? Array.from({ length: 4 }).map((_, index) => (
+                  <EventCardSkeleton key={`skeleton-${index}`} />
+                ))
+              : events.map((event) => (
+                  <EventCard key={event.id} event={event} />
+                ))}
+          </m.div>
+        )}
       </div>
     </section>
   );

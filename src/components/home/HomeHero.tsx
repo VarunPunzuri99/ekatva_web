@@ -130,7 +130,7 @@ export function HomeHero() {
         >
           <m.div style={{ y: phoneY }}>
             <m.img
-              src={homeAssets.mobilesPic}
+              src={homeAssets.bannerImage}
               alt="Ekatva mobile app screens on three phones"
               className="relative z-10 mx-auto block w-[90%] max-w-[500px] object-contain drop-shadow-[0_24px_50px_rgba(31,41,55,0.22)] sm:w-[86%] lg:ml-0 lg:w-[84%] xl:max-w-[560px] xl:w-[88%] 2xl:max-w-[620px]"
               loading="eager"

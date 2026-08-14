@@ -1,6 +1,6 @@
 import { m, useReducedMotion } from "framer-motion";
 import astronomyBg from "@/assets/images/astroguruPage/astronomy_bg.jpg";
-import distiMobile from "@/assets/images/edistiPage/disti_mobilepic.png";
+import distiMobile from "@/assets/images/edistiPage/eDisti_mobile.png";
 import { EDISTI_SHOWCASE } from "@/content/edisti";
 import {
   easeOutExpo,

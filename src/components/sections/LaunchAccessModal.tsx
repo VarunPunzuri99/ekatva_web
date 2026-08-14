@@ -39,16 +39,20 @@ const HIGHLIGHT_ICONS: Record<
 
 function GuestPortrait() {
   const [failed, setFailed] = useState(false);
+  const showPlaceholder = CHIEF_GUEST.photo == null || failed;
 
-  if (failed) {
+  if (showPlaceholder) {
     return (
       <div
         className="flex h-full w-full flex-col items-center justify-center bg-gradient-to-b from-[#5B7BA8] via-[#3D5A80] to-[#2C3E5A]"
         aria-hidden
       >
         <div className="flex h-20 w-20 items-center justify-center rounded-full border border-white/35 bg-white/12 font-home-display text-2xl font-semibold text-white sm:h-24 sm:w-24 sm:text-3xl">
-          JR
+          {CHIEF_GUEST.initials}
         </div>
+        <p className="mt-3 font-home text-[11px] tracking-[0.14em] text-white/70 uppercase sm:text-[12px]">
+          To be announced
+        </p>
       </div>
     );
   }

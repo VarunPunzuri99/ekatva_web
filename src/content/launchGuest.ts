@@ -1,31 +1,32 @@
-import jayeshPhoto from "@/assets/images/jayesh.png";
-
-/** Soft-launch modal — chief guest intro + access code. */
+/** Soft-launch modal — chief guest intro + access code.
+ *  Placeholder until the official chief guest is confirmed.
+ */
 
 export const CHIEF_GUEST = {
   greeting: "We are honored to have our esteemed Chief Guest",
-  name: "Dr. Jayesh Ranjan",
+  name: "XXXX XXXX",
   title:
-    "Special Chief Secretary, Information Technology, Electronics & Communications, Government of Telangana",
+    "Designation to be announced · Department of XXXX, Government of XXXX",
   highlights: [
     {
       id: "admin",
       icon: "document" as const,
-      text: "Renowned administrator and policy maker",
+      text: "Distinguished leader and public figure — details coming soon",
     },
     {
       id: "it",
       icon: "chart" as const,
-      text: "Key architect of Telangana's IT & Innovation growth",
+      text: "Recognized for excellence in innovation and community impact",
     },
     {
       id: "tsiic",
       icon: "building" as const,
-      text: "Former CEO, Telangana State Industrial Infrastructure Corporation (TSIIC)",
+      text: "Esteemed guest for Ekatva’s sacred launch ceremony",
     },
   ],
-  closing:
-    "Passionate about technology, entrepreneurship and youth empowerment",
-  photo: jayeshPhoto,
-  photoAlt: "Dr. Jayesh Ranjan, Chief Guest",
+  closing: "Official chief guest details will be announced shortly",
+  /** No final guest photo yet — modal shows initials placeholder. */
+  photo: null,
+  photoAlt: "Chief Guest placeholder",
+  initials: "XX",
 } as const;

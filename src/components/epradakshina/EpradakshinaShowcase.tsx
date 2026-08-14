@@ -1,6 +1,6 @@
 import { m, useReducedMotion } from "framer-motion";
 import pradakshinaBg from "@/assets/images/ePradakshina/pradakshina_bg.jpg";
-import pradakshinaMobile from "@/assets/images/ePradakshina/ePradakshina_mobilepic.png";
+import pradakshinaMobile from "@/assets/images/ePradakshina/ePradaksina_mobile.png";
 import {
   easeOutExpo,
   fadeUp,

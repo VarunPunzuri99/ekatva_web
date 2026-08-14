@@ -1,8 +1,13 @@
+import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { EventsGrid } from "@/components/events/EventsGrid";
 import { EventsHero } from "@/components/events/EventsHero";
 
 export function EventsPage() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <Helmet>
