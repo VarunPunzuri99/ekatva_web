@@ -88,9 +88,11 @@ export function BookPanditTestimonialsSection() {
 
                 <div className="mt-6 flex items-center gap-3">
                   <span
-                    className="h-11 w-11 shrink-0 rounded-full bg-[#F3E8D2]"
+                    className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#F3E8D2] font-home text-[15px] font-bold text-[#3E1F47]"
                     aria-hidden="true"
-                  />
+                  >
+                    {item.name.trim().charAt(0).toUpperCase()}
+                  </span>
                   <div>
                     <p className="font-home text-[14px] font-bold text-[#3E1F47] sm:text-[15px]">
                       {item.name}
