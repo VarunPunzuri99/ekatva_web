@@ -6,7 +6,6 @@ import {
   easeOutExpo,
   fadeUp,
   staggerContainer,
-  viewportOnce,
 } from "@/lib/animations";
 
 function TodayCardSkeleton() {

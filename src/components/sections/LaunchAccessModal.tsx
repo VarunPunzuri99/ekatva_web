@@ -39,7 +39,8 @@ const HIGHLIGHT_ICONS: Record<
 
 function GuestPortrait() {
   const [failed, setFailed] = useState(false);
-  const showPlaceholder = CHIEF_GUEST.photo == null || failed;
+  const photo = CHIEF_GUEST.photo ?? undefined;
+  const showPlaceholder = photo == null || failed;
 
   if (showPlaceholder) {
     return (
@@ -59,7 +60,7 @@ function GuestPortrait() {
 
   return (
     <img
-      src={CHIEF_GUEST.photo}
+      src={photo}
       alt={CHIEF_GUEST.photoAlt}
       className="h-full w-full object-cover object-[center_12%]"
       onError={() => setFailed(true)}
