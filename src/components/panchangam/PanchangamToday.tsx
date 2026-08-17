@@ -28,6 +28,7 @@ function TodayCardSkeleton() {
           <div key={i} className="h-16 animate-pulse rounded-xl bg-white/10" />
         ))}
       </div>
+      <div className="mt-4 h-24 animate-pulse rounded-xl bg-white/10" />
     </div>
   );
 }
@@ -97,9 +98,16 @@ export function PanchangamToday() {
                   {data.dateLabel}
                 </p>
               </div>
-              <span className="rounded-full border border-white/70 px-3.5 py-1 font-home text-[11px] font-semibold tracking-[0.12em] text-white uppercase sm:text-[12px]">
-                {data.paksha}
-              </span>
+              <div className="flex flex-wrap items-center justify-end gap-2">
+                {data.maasam && (
+                  <span className="rounded-full border border-[#F5B04A]/80 bg-[#F5B04A]/15 px-3.5 py-1 font-home text-[11px] font-semibold tracking-[0.12em] text-[#F5B04A] uppercase sm:text-[12px]">
+                    {data.maasam.badge}
+                  </span>
+                )}
+                <span className="rounded-full border border-white/70 px-3.5 py-1 font-home text-[11px] font-semibold tracking-[0.12em] text-white uppercase sm:text-[12px]">
+                  {data.paksha}
+                </span>
+              </div>
             </div>
 
             <m.ul
@@ -153,6 +161,39 @@ export function PanchangamToday() {
                 </m.div>
               ))}
             </m.div>
+
+            {data.varjyam.length > 0 && (
+              <m.div
+                className="mt-4 rounded-xl border border-[#F5B04A]/35 bg-[#2A1208]/35 px-3 py-3.5 sm:mt-5 sm:px-4 sm:py-4"
+                variants={fadeUp}
+                initial="hidden"
+                animate="visible"
+              >
+                <div className="mb-3 flex items-center justify-center gap-3">
+                  <span className="h-px flex-1 max-w-16 bg-[#F5B04A]/40" />
+                  <p className="font-home text-[12px] font-semibold tracking-[0.14em] text-[#F5B04A] uppercase sm:text-[13px]">
+                    Varjyam
+                  </p>
+                  <span className="h-px flex-1 max-w-16 bg-[#F5B04A]/40" />
+                </div>
+                <div
+                  className={`grid gap-2.5 ${
+                    data.varjyam.length > 1 ? "sm:grid-cols-2" : ""
+                  }`}
+                >
+                  {data.varjyam.map((time) => (
+                    <div
+                      key={time}
+                      className="rounded-lg border border-white/20 bg-white/10 px-3 py-2.5 text-center"
+                    >
+                      <p className="font-home text-[12px] font-medium text-white sm:text-[13px]">
+                        {time}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </m.div>
+            )}
 
             <p className="mt-5 font-home text-[11px] text-white/75 italic sm:mt-6 sm:text-[12px]">
               {data.note}

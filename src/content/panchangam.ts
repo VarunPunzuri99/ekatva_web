@@ -91,6 +91,8 @@ export const PANCHANGAM_TODAY = {
     { label: "Yamagandam", time: "07:30 AM – 09:00 AM" },
     { label: "Abhijit Muhurta", time: "11:45 AM – 12:36 PM" },
   ],
+  varjyam: ["10:58 AM – 12:39 PM", "05:29 AM – 07:10 AM"],
+  maasam: "Shravana",
   note: "*All calculations shifted automatically based on your local coordinates.",
 } as const;
 

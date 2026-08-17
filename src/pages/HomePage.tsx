@@ -1,5 +1,6 @@
 import { BackToTopButton } from "@/components/home/BackToTopButton";
 import { HomeAppCta } from "@/components/home/HomeAppCta";
+import { HomeAstroGuru } from "@/components/home/HomeAstroGuru";
 import { HomeEvents } from "@/components/home/HomeEvents";
 import { HomeFooter } from "@/components/home/HomeFooter";
 import { HomeFreshStart } from "@/components/home/HomeFreshStart";
@@ -21,6 +22,7 @@ export function HomePage() {
           <HomeHero />
           <HomeServices />
           <HomeHowHelps />
+          <HomeAstroGuru />
           <HomeWhyChoose />
           <HomeSocialTestimonials />
           <HomeEvents />

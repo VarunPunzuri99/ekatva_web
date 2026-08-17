@@ -102,6 +102,68 @@ export const ABOUT_WHY = {
   ],
 } as const;
 
+export const ABOUT_VISIONARIES = {
+  title: "The Visionaries Behind Ekatva",
+  subtitle:
+    "Ekatva is built on a vision to make devotion simple, accessible, and meaningful for everyone. Guided by faith, technology, and service, our leadership is committed to connecting devotees with divine experiences in a seamless way.",
+  people: [
+    {
+      id: "raja-sekhar",
+      name: "Raja Sekhar",
+      role: "Director & Co-Founder",
+      description:
+        "A visionary leader with a passion for spirituality and technology, Raja Sekhar brings a strong background in strategy and innovation, driving Ekatva's mission to create a trusted devotional ecosystem for millions.",
+      traits: [
+        {
+          id: "strategic",
+          icon: "sparkles" as const,
+          title: "Strategic",
+          subtitle: "Leadership",
+        },
+        {
+          id: "innovation",
+          icon: "bulb" as const,
+          title: "Innovation",
+          subtitle: "Driven",
+        },
+        {
+          id: "devotion",
+          icon: "heart" as const,
+          title: "Devotion",
+          subtitle: "First",
+        },
+      ],
+    },
+    {
+      id: "kiran-kumar",
+      name: "Kiran Kumar",
+      role: "Director & Co-Founder",
+      description:
+        "A technology enthusiast and operations expert, Kiran Kumar oversees the execution and growth of Ekatva's platform. His focus is on building seamless experiences and ensuring excellence in every devotee interaction.",
+      traits: [
+        {
+          id: "operational",
+          icon: "settings" as const,
+          title: "Operational",
+          subtitle: "Excellence",
+        },
+        {
+          id: "trust",
+          icon: "shield" as const,
+          title: "Trust &",
+          subtitle: "Reliability",
+        },
+        {
+          id: "customer",
+          icon: "user" as const,
+          title: "Customer",
+          subtitle: "Centric",
+        },
+      ],
+    },
+  ],
+} as const;
+
 export const ABOUT_CTA = {
   title: "Bring your Spiritual Journey with Ekatva today.",
   subtitle: "Your faith. Our platform. Divine blessings.",

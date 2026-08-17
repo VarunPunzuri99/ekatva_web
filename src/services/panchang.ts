@@ -39,11 +39,19 @@ export interface PanchangResponse {
     yoga: NamedAnga;
     karana: NamedAnga;
   };
+  maasam?: {
+    name: string;
+    is_adhik: boolean;
+    is_kshaya: boolean;
+    amanta_start: string;
+    amanta_end: string;
+  };
   kaalams: {
     rahu_kalam: TimeWindow;
     yamagandam: TimeWindow;
     gulika_kalam: TimeWindow;
   };
+  varjyam?: TimeWindow[];
   muhurtas: {
     brahma_muhurta: TimeWindow;
     abhijit_muhurta: TimeWindow;
@@ -55,8 +63,14 @@ export interface PanchangTodayView {
   title: string;
   dateLabel: string;
   paksha: string;
+  maasam: {
+    name: string;
+    badge: string;
+    qualifier?: string;
+  } | null;
   rows: { label: string; value: string; time: string }[];
   windows: { label: string; time: string }[];
+  varjyam: string[];
   note: string;
 }
 
@@ -147,6 +161,23 @@ function tillLabel(anga: NamedAnga): string {
   return at ? `Till ${formatClock12(at)}` : "All Day";
 }
 
+function formatMaasam(
+  maasam: PanchangResponse["maasam"],
+): PanchangTodayView["maasam"] {
+  const name = maasam?.name?.trim();
+  if (!name) return null;
+
+  const qualifiers: string[] = [];
+  if (maasam?.is_adhik) qualifiers.push("Adhika Maasa");
+  if (maasam?.is_kshaya) qualifiers.push("Kshaya Maasa");
+
+  return {
+    name,
+    badge: `${name} Maasam`,
+    qualifier: qualifiers.length ? qualifiers.join(" · ") : undefined,
+  };
+}
+
 function splitTithi(name: string): { paksha: string; tithi: string } {
   const trimmed = name.trim();
   if (/^shukla\s+/i.test(trimmed)) {
@@ -170,11 +201,13 @@ export function mapPanchangToTodayView(
   const { paksha, tithi } = splitTithi(data.pancha_anga.tithi.name);
   const [y, m, d] = data.date.split("-").map(Number);
   const weekday = new Date(y, m - 1, d).getDay();
+  const maasam = formatMaasam(data.maasam);
 
   return {
     title: "Today's Panchangam",
     dateLabel: formatDisplayDate(data.date),
     paksha,
+    maasam,
     rows: [
       {
         label: "Tithi",
@@ -201,6 +234,15 @@ export function mapPanchangToTodayView(
         value: data.pancha_anga.karana.name,
         time: tillLabel(data.pancha_anga.karana),
       },
+      ...(maasam
+        ? [
+            {
+              label: "Maasam",
+              value: maasam.name,
+              time: maasam.qualifier ?? "All Day",
+            },
+          ]
+        : []),
     ],
     windows: [
       {
@@ -216,6 +258,7 @@ export function mapPanchangToTodayView(
         time: formatWindow(data.muhurtas.abhijit_muhurta),
       },
     ],
+    varjyam: (data.varjyam ?? []).map(formatWindow),
     note: "*All calculations shifted automatically based on your local coordinates.",
   };
 }

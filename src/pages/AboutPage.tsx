@@ -3,6 +3,7 @@ import { AboutHero } from "@/components/about/AboutHero";
 import { AboutIntro } from "@/components/about/AboutIntro";
 import { AboutMissionVision } from "@/components/about/AboutMissionVision";
 import { AboutValues } from "@/components/about/AboutValues";
+import { AboutVisionaries } from "@/components/about/AboutVisionaries";
 import { AboutWhy } from "@/components/about/AboutWhy";
 import { HomeAppCta } from "@/components/home/HomeAppCta";
 import { ABOUT_CTA } from "@/content/about";
@@ -23,6 +24,7 @@ export function AboutPage() {
         <AboutMissionVision />
         <AboutValues />
         <AboutWhy />
+        <AboutVisionaries />
         <HomeAppCta title={ABOUT_CTA.title} subtitle={ABOUT_CTA.subtitle} />
       </main>
     </>

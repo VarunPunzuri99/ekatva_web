@@ -18,6 +18,67 @@ export const HOME_HELP_POINTS = [
   "Align your day with accurate Panchangam guidance",
 ] as const;
 
+export const HOME_ASTROGURU = {
+  title: "AstroGuru",
+  subtitle: "Ask. Understand. Receive Divine Guidance.",
+  description:
+    "AstroGuru is your personal AI Astro coach that combines ancient wisdom with advanced AI to answer your questions about life, career, health and relationships — privately, clearly and anytime you need divine guidance.",
+  href: "/astroguru",
+  features: [
+    {
+      id: "ask",
+      icon: "ask" as const,
+      title: "Ask Anything",
+      description: "Life, career, health, relationships & more",
+    },
+    {
+      id: "insights",
+      icon: "insights" as const,
+      title: "Personalized Insights",
+      description: "Based on your birth details",
+    },
+    {
+      id: "remedies",
+      icon: "remedies" as const,
+      title: "Remedies & Guidance",
+      description: "Practical solutions for your problems",
+    },
+    {
+      id: "private",
+      icon: "private" as const,
+      title: "Private & Secure",
+      description: "Your data is safe with us",
+    },
+  ],
+  stats: [
+    {
+      id: "satisfaction",
+      icon: "star" as const,
+      value: "98%",
+      label: "User Satisfaction",
+    },
+    {
+      id: "available",
+      icon: "clock" as const,
+      value: "24/7",
+      label: "Always Available",
+    },
+    {
+      id: "hybrid",
+      icon: "shield" as const,
+      value: "AI + Vedic",
+      label: "Wisdom Hybrid",
+    },
+  ],
+  cta: {
+    title: "Experience the Power of AI & Astrology",
+    subtitle:
+      "Get clarity in confusion, direction in uncertainty, and peace in every decision.",
+    label: "Download App",
+    button: "Talk to AstroGuru",
+  },
+} as const;
+
 export const HOME_STATS = [
   {
     value: "50000+",
