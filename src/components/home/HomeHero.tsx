@@ -2,7 +2,7 @@ import { m, useInView, useScroll, useTransform } from "framer-motion";
 import { Download } from "lucide-react";
 import { useRef } from "react";
 import { homeAssets } from "@/assets/home";
-import { QrPlaceholder, StoreBadge } from "@/components/home/StoreBadges";
+import { StoreBadge, StoreQr } from "@/components/home/StoreBadges";
 import {
   fadeUp,
   floatingMotion,
@@ -101,15 +101,15 @@ export function HomeHero() {
             className="mt-7 flex flex-wrap items-start gap-6 sm:gap-8 xl:mt-8 xl:gap-10"
           >
             <div className="flex flex-col items-start gap-2.5">
-              <QrPlaceholder
-                label="Google Play QR code"
+              <StoreQr
+                store="google"
                 className="h-[78px] w-[78px] xl:h-[88px] xl:w-[88px]"
               />
               <StoreBadge store="google" />
             </div>
             <div className="flex flex-col items-start gap-2.5">
-              <QrPlaceholder
-                label="App Store QR code"
+              <StoreQr
+                store="apple"
                 className="h-[78px] w-[78px] xl:h-[88px] xl:w-[88px]"
               />
               <StoreBadge store="apple" />

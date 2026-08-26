@@ -33,30 +33,30 @@ export interface PanchangResponse {
   };
   sunrise: string;
   sunset: string;
-  pancha_anga: {
-    tithi: NamedAnga;
-    nakshatra: NamedAnga;
-    yoga: NamedAnga;
-    karana: NamedAnga;
-  };
+  pancha_anga?: {
+    tithi?: NamedAnga | null;
+    nakshatra?: NamedAnga | null;
+    yoga?: NamedAnga | null;
+    karana?: NamedAnga | null;
+  } | null;
   maasam?: {
     name: string;
     is_adhik: boolean;
     is_kshaya: boolean;
     amanta_start: string;
     amanta_end: string;
-  };
-  kaalams: {
-    rahu_kalam: TimeWindow;
-    yamagandam: TimeWindow;
-    gulika_kalam: TimeWindow;
-  };
-  varjyam?: TimeWindow[];
-  muhurtas: {
-    brahma_muhurta: TimeWindow;
-    abhijit_muhurta: TimeWindow;
-    durmuhurta: TimeWindow[];
-  };
+  } | null;
+  kaalams?: {
+    rahu_kalam?: TimeWindow | null;
+    yamagandam?: TimeWindow | null;
+    gulika_kalam?: TimeWindow | null;
+  } | null;
+  varjyam?: (TimeWindow | null)[] | null;
+  muhurtas?: {
+    brahma_muhurta?: TimeWindow | null;
+    abhijit_muhurta?: TimeWindow | null;
+    durmuhurta?: (TimeWindow | null)[] | null;
+  } | null;
 }
 
 export interface PanchangTodayView {
@@ -142,7 +142,8 @@ function formatDisplayDate(dateKey: string): string {
 }
 
 /** "10:49" (24h) → "10:49 AM" */
-export function formatClock12(time24: string): string {
+export function formatClock12(time24: string | null | undefined): string {
+  if (!time24) return "—";
   const [hRaw, mRaw] = time24.split(":");
   let hours = Number(hRaw);
   const minutes = Number(mRaw);
@@ -152,13 +153,18 @@ export function formatClock12(time24: string): string {
   return `${hours}:${pad2(minutes)} ${period}`;
 }
 
-function formatWindow(window: TimeWindow): string {
+function formatWindow(window: TimeWindow | null | undefined): string {
+  if (!window?.start || !window?.end) return "Not today";
   return `${formatClock12(window.start)} – ${formatClock12(window.end)}`;
 }
 
-function tillLabel(anga: NamedAnga): string {
-  const at = anga.transitions?.[0]?.at;
+function tillLabel(anga: NamedAnga | null | undefined): string {
+  const at = anga?.transitions?.[0]?.at;
   return at ? `Till ${formatClock12(at)}` : "All Day";
+}
+
+function angaName(anga: NamedAnga | null | undefined): string {
+  return anga?.name?.trim() || "—";
 }
 
 function formatMaasam(
@@ -178,8 +184,13 @@ function formatMaasam(
   };
 }
 
-function splitTithi(name: string): { paksha: string; tithi: string } {
-  const trimmed = name.trim();
+function splitTithi(
+  name: string | null | undefined,
+): { paksha: string; tithi: string } {
+  const trimmed = name?.trim() ?? "";
+  if (!trimmed) {
+    return { paksha: "Panchangam", tithi: "—" };
+  }
   if (/^shukla\s+/i.test(trimmed)) {
     return {
       paksha: "Shukla Paksha",
@@ -198,21 +209,24 @@ function splitTithi(name: string): { paksha: string; tithi: string } {
 export function mapPanchangToTodayView(
   data: PanchangResponse,
 ): PanchangTodayView {
-  const { paksha, tithi } = splitTithi(data.pancha_anga.tithi.name);
-  const [y, m, d] = data.date.split("-").map(Number);
-  const weekday = new Date(y, m - 1, d).getDay();
+  const anga = data.pancha_anga;
+  const { paksha, tithi } = splitTithi(anga?.tithi?.name);
+  const [y, m, d] = (data.date ?? "").split("-").map(Number);
+  const weekday = Number.isFinite(y) && Number.isFinite(m) && Number.isFinite(d)
+    ? new Date(y, m - 1, d).getDay()
+    : new Date().getDay();
   const maasam = formatMaasam(data.maasam);
 
   return {
     title: "Today's Panchangam",
-    dateLabel: formatDisplayDate(data.date),
+    dateLabel: data.date ? formatDisplayDate(data.date) : "—",
     paksha,
     maasam,
     rows: [
       {
         label: "Tithi",
         value: tithi,
-        time: tillLabel(data.pancha_anga.tithi),
+        time: tillLabel(anga?.tithi),
       },
       {
         label: "Vara",
@@ -221,18 +235,18 @@ export function mapPanchangToTodayView(
       },
       {
         label: "Nakshatra",
-        value: data.pancha_anga.nakshatra.name,
-        time: tillLabel(data.pancha_anga.nakshatra),
+        value: angaName(anga?.nakshatra),
+        time: tillLabel(anga?.nakshatra),
       },
       {
         label: "Yoga",
-        value: data.pancha_anga.yoga.name,
-        time: tillLabel(data.pancha_anga.yoga),
+        value: angaName(anga?.yoga),
+        time: tillLabel(anga?.yoga),
       },
       {
         label: "Karana",
-        value: data.pancha_anga.karana.name,
-        time: tillLabel(data.pancha_anga.karana),
+        value: angaName(anga?.karana),
+        time: tillLabel(anga?.karana),
       },
       ...(maasam
         ? [
@@ -247,18 +261,20 @@ export function mapPanchangToTodayView(
     windows: [
       {
         label: "Rahu Kalam",
-        time: formatWindow(data.kaalams.rahu_kalam),
+        time: formatWindow(data.kaalams?.rahu_kalam),
       },
       {
         label: "Yamagandam",
-        time: formatWindow(data.kaalams.yamagandam),
+        time: formatWindow(data.kaalams?.yamagandam),
       },
       {
         label: "Abhijit Muhurta",
-        time: formatWindow(data.muhurtas.abhijit_muhurta),
+        time: formatWindow(data.muhurtas?.abhijit_muhurta),
       },
     ],
-    varjyam: (data.varjyam ?? []).map(formatWindow),
+    varjyam: (data.varjyam ?? [])
+      .filter((window): window is TimeWindow => Boolean(window?.start && window?.end))
+      .map(formatWindow),
     note: "*All calculations shifted automatically based on your local coordinates.",
   };
 }

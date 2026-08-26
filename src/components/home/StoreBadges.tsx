@@ -1,42 +1,34 @@
 import { cn } from "@/lib/utils";
+import appleStoreQr from "@/assets/images/AppleStore_QRcode.jpeg";
+import googlePlayQr from "@/assets/images/Googleplay_QRcode.jpeg";
 
-interface QrPlaceholderProps {
-  label: string;
+interface StoreQrProps {
+  store: "google" | "apple";
   className?: string;
 }
 
-/** Decorative QR stand-in until real store QR assets are provided. */
-export function QrPlaceholder({ label, className }: QrPlaceholderProps) {
+/** Scannable store QR — Google Play / App Store download links. */
+export function StoreQr({ store, className }: StoreQrProps) {
+  const isGoogle = store === "google";
+
   return (
     <div
       className={cn(
-        "flex h-[72px] w-[72px] shrink-0 items-center justify-center rounded-[4px] border border-[#D1D5DB] bg-white p-1.5",
+        "flex h-[72px] w-[72px] shrink-0 items-center justify-center overflow-hidden rounded-[4px] border border-[#D1D5DB] bg-white p-1",
         className,
       )}
-      role="img"
-      aria-label={label}
     >
-      <svg viewBox="0 0 64 64" className="h-full w-full text-[#111827]" aria-hidden="true">
-        <rect x="2" y="2" width="22" height="22" fill="currentColor" />
-        <rect x="6" y="6" width="14" height="14" fill="white" />
-        <rect x="10" y="10" width="6" height="6" fill="currentColor" />
-        <rect x="40" y="2" width="22" height="22" fill="currentColor" />
-        <rect x="44" y="6" width="14" height="14" fill="white" />
-        <rect x="48" y="10" width="6" height="6" fill="currentColor" />
-        <rect x="2" y="40" width="22" height="22" fill="currentColor" />
-        <rect x="6" y="44" width="14" height="14" fill="white" />
-        <rect x="10" y="48" width="6" height="6" fill="currentColor" />
-        <rect x="28" y="2" width="6" height="6" fill="currentColor" />
-        <rect x="28" y="12" width="6" height="6" fill="currentColor" />
-        <rect x="34" y="28" width="6" height="6" fill="currentColor" />
-        <rect x="40" y="34" width="6" height="6" fill="currentColor" />
-        <rect x="48" y="40" width="6" height="6" fill="currentColor" />
-        <rect x="56" y="48" width="6" height="6" fill="currentColor" />
-        <rect x="40" y="48" width="8" height="8" fill="currentColor" />
-        <rect x="52" y="56" width="8" height="6" fill="currentColor" />
-        <rect x="28" y="40" width="6" height="14" fill="currentColor" />
-        <rect x="28" y="56" width="10" height="6" fill="currentColor" />
-      </svg>
+      <img
+        src={isGoogle ? googlePlayQr : appleStoreQr}
+        alt={
+          isGoogle
+            ? "Scan to download Ekatva on Google Play"
+            : "Scan to download Ekatva on the App Store"
+        }
+        className="h-full w-full object-contain"
+        loading="lazy"
+        decoding="async"
+      />
     </div>
   );
 }

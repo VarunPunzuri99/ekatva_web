@@ -1,6 +1,6 @@
 import { m } from "framer-motion";
 import { homeAssets } from "@/assets/home";
-import { QrPlaceholder, StoreBadge } from "@/components/home/StoreBadges";
+import { StoreBadge, StoreQr } from "@/components/home/StoreBadges";
 import {
   fadeLeft,
   fadeRight,
@@ -65,11 +65,11 @@ export function HomeAppCta({
           variants={fadeUp}
         >
           <div className="flex flex-col items-center gap-2.5">
-            <QrPlaceholder label="Google Play QR code" className="h-20 w-20" />
+            <StoreQr store="google" className="h-20 w-20" />
             <StoreBadge store="google" />
           </div>
           <div className="flex flex-col items-center gap-2.5">
-            <QrPlaceholder label="App Store QR code" className="h-20 w-20" />
+            <StoreQr store="apple" className="h-20 w-20" />
             <StoreBadge store="apple" />
           </div>
         </m.div>
