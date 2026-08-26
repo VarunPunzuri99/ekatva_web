@@ -156,7 +156,7 @@ export const HOME_FOOTER = {
     emailHref: "mailto:connect@ekatva.online",
     hours: "Mon - Sat: 6:00 AM - 9:00 PM",
     address:
-      "Plot # 37 & 38, Serinity Square, Madhapur, Hyderabad, Telangana 500081",
+      "Metaglobe Technologies Private Limited, Plot # 37 & 38, Serinity Square, Madhapur, Hyderabad, Telangana 500081",
   },
   appStores: [
     {

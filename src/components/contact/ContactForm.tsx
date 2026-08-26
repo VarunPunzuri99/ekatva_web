@@ -1,16 +1,19 @@
-import { m } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import {
-  type ChangeEvent,
   type FormEvent,
+  type KeyboardEvent,
+  useEffect,
   useId,
   useRef,
   useState,
 } from "react";
 import {
+  Check,
+  ChevronDown,
   CircleHelp,
   Mail,
   MessageSquareText,
-  Paperclip,
+  // Paperclip,
   Phone,
   Send,
   UserRound,
@@ -30,7 +33,7 @@ import { cn } from "@/lib/utils";
 import { ContactApiError, submitContact } from "@/services/contact";
 
 type FieldErrors = Partial<
-  Record<"name" | "email" | "phone" | "queryType" | "message" | "file", string>
+  Record<"name" | "email" | "phone" | "queryType" | "message", string>
 >;
 
 const fieldShell =
@@ -72,15 +75,199 @@ function validate(values: {
   return errors;
 }
 
+interface QueryTypeSelectProps {
+  value: string;
+  disabled?: boolean;
+  invalid?: boolean;
+  describedBy?: string;
+  onChange: (value: string) => void;
+}
+
+function QueryTypeSelect({
+  value,
+  disabled,
+  invalid,
+  describedBy,
+  onChange,
+}: QueryTypeSelectProps) {
+  const listId = useId();
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(-1);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const onPointerDown = (event: MouseEvent) => {
+      if (!rootRef.current?.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    };
+    const onKeyDown = (event: globalThis.KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+
+    document.addEventListener("mousedown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    const selected = CONTACT_QUERY_TYPES.findIndex((type) => type === value);
+    setActiveIndex(selected >= 0 ? selected : 0);
+  }, [open, value]);
+
+  const selectOption = (next: string) => {
+    onChange(next);
+    setOpen(false);
+  };
+
+  const onTriggerKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    if (disabled) return;
+
+    if (
+      !open &&
+      (event.key === "ArrowDown" || event.key === "Enter" || event.key === " ")
+    ) {
+      event.preventDefault();
+      setOpen(true);
+      return;
+    }
+
+    if (!open) return;
+
+    if (event.key === "ArrowUp") {
+      event.preventDefault();
+      setActiveIndex((index) =>
+        index <= 0 ? CONTACT_QUERY_TYPES.length - 1 : index - 1,
+      );
+    } else if (event.key === "ArrowDown") {
+      event.preventDefault();
+      setActiveIndex((index) =>
+        index >= CONTACT_QUERY_TYPES.length - 1 ? 0 : index + 1,
+      );
+    } else if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      const next = CONTACT_QUERY_TYPES[activeIndex];
+      if (next) selectOption(next);
+    }
+  };
+
+  return (
+    <div ref={rootRef} className="relative">
+      <button
+        type="button"
+        id="contact-query"
+        disabled={disabled}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-controls={listId}
+        aria-label="Select Query Type"
+        aria-required="true"
+        aria-invalid={invalid}
+        aria-describedby={describedBy}
+        onClick={() => {
+          if (!disabled) setOpen((prev) => !prev);
+        }}
+        onKeyDown={onTriggerKeyDown}
+        className={cn(
+          fieldShell,
+          "w-full cursor-pointer text-left outline-none",
+          open &&
+            "border-[#F27022]/55 shadow-[0_0_0_3px_rgba(242,112,34,0.12)]",
+          invalid && "border-red-400/70",
+          disabled && "cursor-not-allowed opacity-60",
+        )}
+      >
+        <CircleHelp
+          className={cn(
+            "h-4 w-4 shrink-0 transition-colors",
+            open || value ? "text-[#F27022]" : "text-[#9CA3AF]",
+          )}
+          strokeWidth={1.75}
+          aria-hidden
+        />
+        <span
+          className={cn(
+            "min-w-0 flex-1 truncate font-home text-[14px]",
+            value ? "font-medium text-[#1A1A1A]" : "text-[#9CA3AF]",
+          )}
+        >
+          {value || "Select Query Type *"}
+        </span>
+        <ChevronDown
+          className={cn(
+            "h-4 w-4 shrink-0 text-[#9CA3AF] transition-transform duration-200",
+            open && "rotate-180 text-[#F27022]",
+          )}
+          strokeWidth={2}
+          aria-hidden
+        />
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <m.ul
+            id={listId}
+            role="listbox"
+            aria-label="Query types"
+            initial={{ opacity: 0, y: -6, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -4, scale: 0.98 }}
+            transition={{ duration: 0.18, ease: easeOutExpo }}
+            className="absolute left-0 right-0 z-30 mt-2 overflow-hidden rounded-xl border border-[#E5E7EB] bg-white p-1.5 shadow-[0_16px_40px_rgba(31,41,55,0.14)]"
+          >
+            {CONTACT_QUERY_TYPES.map((type, index) => {
+              const selected = value === type;
+              const active = activeIndex === index;
+              return (
+                <li key={type} role="option" aria-selected={selected}>
+                  <button
+                    type="button"
+                    onMouseEnter={() => setActiveIndex(index)}
+                    onClick={() => selectOption(type)}
+                    className={cn(
+                      "flex w-full items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-left font-home text-[13px] transition-colors sm:text-[14px]",
+                      selected
+                        ? "bg-[#FFF1E6] font-semibold text-[#C2410C]"
+                        : active
+                          ? "bg-[#F9FAFB] text-[#1A1A1A]"
+                          : "text-[#374151] hover:bg-[#F9FAFB]",
+                    )}
+                  >
+                    <span>{type}</span>
+                    {selected && (
+                      <Check
+                        className="h-4 w-4 shrink-0 text-[#F27022]"
+                        strokeWidth={2.25}
+                        aria-hidden
+                      />
+                    )}
+                  </button>
+                </li>
+              );
+            })}
+          </m.ul>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 export function ContactForm() {
-  const fileInputId = useId();
-  const fileRef = useRef<HTMLInputElement>(null);
+  // Attach file upload — disabled for now
+  // const fileInputId = useId();
+  // const fileRef = useRef<HTMLInputElement>(null);
+  // const [file, setFile] = useState<File | null>(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [queryType, setQueryType] = useState("");
   const [message, setMessage] = useState("");
-  const [file, setFile] = useState<File | null>(null);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [loading, setLoading] = useState(false);
 
@@ -93,27 +280,24 @@ export function ContactForm() {
     });
   };
 
-  const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const next = e.target.files?.[0] ?? null;
-    if (next && next.size > CONTACT_PAGE.maxAttachmentBytes) {
-      setFile(null);
-      e.target.value = "";
-      setErrors((prev) => ({
-        ...prev,
-        file: "File must be 5MB or smaller",
-      }));
-      return;
-    }
-    setFile(next);
-    clearError("file");
-  };
+  // const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+  //   const next = e.target.files?.[0] ?? null;
+  //   if (next && next.size > CONTACT_PAGE.maxAttachmentBytes) {
+  //     setFile(null);
+  //     e.target.value = "";
+  //     setErrors((prev) => ({
+  //       ...prev,
+  //       file: "File must be 5MB or smaller",
+  //     }));
+  //     return;
+  //   }
+  //   setFile(next);
+  //   clearError("file");
+  // };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const next = validate({ name, email, phone, queryType, message });
-    if (file && file.size > CONTACT_PAGE.maxAttachmentBytes) {
-      next.file = "File must be 5MB or smaller";
-    }
     setErrors(next);
     if (Object.keys(next).length > 0) return;
 
@@ -125,7 +309,7 @@ export function ContactForm() {
         phone: normalizePhone(phone.trim()),
         queryType,
         message: message.trim(),
-        attachmentName: file?.name,
+        // attachmentName: file?.name,
       });
       toast({
         variant: "success",
@@ -140,8 +324,8 @@ export function ContactForm() {
       setPhone("");
       setQueryType("");
       setMessage("");
-      setFile(null);
-      if (fileRef.current) fileRef.current.value = "";
+      // setFile(null);
+      // if (fileRef.current) fileRef.current.value = "";
       setErrors({});
     } catch (err) {
       const description =
@@ -195,14 +379,16 @@ export function ContactForm() {
                 id="contact-name"
                 name="name"
                 autoComplete="name"
+                required
                 value={name}
                 disabled={loading}
                 onChange={(e) => {
                   setName(e.target.value);
                   clearError("name");
                 }}
-                placeholder="Full Name"
+                placeholder="Full Name *"
                 aria-label="Full Name"
+                aria-required="true"
                 aria-invalid={!!errors.name}
                 aria-describedby={errors.name ? "contact-name-error" : undefined}
                 className={inputClass}
@@ -231,14 +417,16 @@ export function ContactForm() {
                 name="email"
                 type="email"
                 autoComplete="email"
+                required
                 value={email}
                 disabled={loading}
                 onChange={(e) => {
                   setEmail(e.target.value);
                   clearError("email");
                 }}
-                placeholder="Email Address"
+                placeholder="Email Address *"
                 aria-label="Email Address"
+                aria-required="true"
                 aria-invalid={!!errors.email}
                 aria-describedby={
                   errors.email ? "contact-email-error" : undefined
@@ -272,14 +460,16 @@ export function ContactForm() {
                 type="tel"
                 inputMode="tel"
                 autoComplete="tel"
+                required
                 value={phone}
                 disabled={loading}
                 onChange={(e) => {
                   setPhone(e.target.value);
                   clearError("phone");
                 }}
-                placeholder="Phone Number"
+                placeholder="Phone Number *"
                 aria-label="Phone Number"
+                aria-required="true"
                 aria-invalid={!!errors.phone}
                 aria-describedby={
                   errors.phone ? "contact-phone-error" : undefined
@@ -299,42 +489,18 @@ export function ContactForm() {
           </div>
 
           <div>
-            <div
-              className={cn(fieldShell, errors.queryType && "border-red-400/70")}
-            >
-              <CircleHelp
-                className="h-4 w-4 shrink-0 text-[#9CA3AF]"
-                strokeWidth={1.75}
-                aria-hidden
-              />
-              <select
-                id="contact-query"
-                name="queryType"
-                value={queryType}
-                disabled={loading}
-                onChange={(e) => {
-                  setQueryType(e.target.value);
-                  clearError("queryType");
-                }}
-                aria-label="Select Query Type"
-                aria-invalid={!!errors.queryType}
-                aria-describedby={
-                  errors.queryType ? "contact-query-error" : undefined
-                }
-                className={cn(
-                  inputClass,
-                  "cursor-pointer appearance-none pr-2",
-                  !queryType && "text-[#9CA3AF]",
-                )}
-              >
-                <option value="">Select Query Type</option>
-                {CONTACT_QUERY_TYPES.map((type) => (
-                  <option key={type} value={type}>
-                    {type}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <QueryTypeSelect
+              value={queryType}
+              disabled={loading}
+              invalid={!!errors.queryType}
+              describedBy={
+                errors.queryType ? "contact-query-error" : undefined
+              }
+              onChange={(next) => {
+                setQueryType(next);
+                clearError("queryType");
+              }}
+            />
             {errors.queryType && (
               <p
                 id="contact-query-error"
@@ -364,14 +530,16 @@ export function ContactForm() {
               id="contact-message"
               name="message"
               rows={5}
+              required
               value={message}
               disabled={loading}
               onChange={(e) => {
                 setMessage(e.target.value);
                 clearError("message");
               }}
-              placeholder="Write your message..."
+              placeholder="Write your message... *"
               aria-label="Message"
+              aria-required="true"
               aria-invalid={!!errors.message}
               aria-describedby={
                 errors.message ? "contact-message-error" : undefined
@@ -390,6 +558,7 @@ export function ContactForm() {
           )}
         </div>
 
+        {/* Attach file upload — disabled for now
         <div>
           <div
             className={cn(
@@ -435,6 +604,7 @@ export function ContactForm() {
             </p>
           )}
         </div>
+        */}
       </m.div>
 
       <m.div variants={fadeUp} className="mt-6 sm:mt-7">

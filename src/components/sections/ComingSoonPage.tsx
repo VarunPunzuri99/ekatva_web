@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ServiceCard } from "@/components/sections/ServiceCard";
 import { CountdownTimer } from "@/components/sections/CountdownTimer";
-import { LaunchAccessModal } from "@/components/sections/LaunchAccessModal";
 import { SubscribeForm } from "@/components/sections/SubscribeForm";
 import { TrustBar } from "@/components/sections/TrustBar";
 import { SacredOrnament } from "@/components/common/SacredOrnament";
@@ -15,7 +14,7 @@ import { hasReachedLaunch } from "@/lib/constants";
 const LANDING_MIN_HEIGHT = "max(100vh, calc(100vw * 1345 / 1169))";
 
 export function ComingSoonPage() {
-  const [launchOpen, setLaunchOpen] = useState(false);
+  const navigate = useNavigate();
   const [launched, setLaunched] = useState(() => hasReachedLaunch());
 
   return (
@@ -73,7 +72,7 @@ export function ComingSoonPage() {
 
           <button
             type="button"
-            onClick={() => setLaunchOpen(true)}
+            onClick={() => navigate("/launch")}
             className="mt-6 rounded-full bg-primary-light px-8 py-3 font-ui text-sm font-bold tracking-[0.12em] text-dark uppercase shadow-lg shadow-primary/25 transition-transform hover:scale-[1.03] sm:px-10 md:mt-8 md:px-12 md:py-3.5 md:text-base"
           >
             {launched ? "Launch" : "Launching Soon"}
@@ -183,10 +182,6 @@ export function ComingSoonPage() {
         </footer>
       </div>
 
-      <LaunchAccessModal
-        open={launchOpen}
-        onClose={() => setLaunchOpen(false)}
-      />
     </div>
   );
 }

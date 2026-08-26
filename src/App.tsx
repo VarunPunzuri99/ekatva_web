@@ -23,6 +23,7 @@ import { FeaturesPage } from "@/pages/FeaturesPage";
 import { KundliPage } from "@/pages/KundliPage";
 import { PanchangamPage } from "@/pages/PanchangamPage";
 import { RootPage } from "@/pages/RootPage";
+import { LaunchPage } from "@/pages/LaunchPage";
 import { PrivacyPolicyPage } from "@/pages/PrivacyPolicyPage";
 import { TermsPage } from "@/pages/TermsPage";
 import { RefundPolicyPage } from "@/pages/RefundPolicyPage";
@@ -35,6 +36,7 @@ function App() {
         <Routes>
           <Route path="/" element={<RootPage />} />
           <Route path="/home" element={<Navigate to="/" replace />} />
+          <Route path="/launch" element={<LaunchPage />} />
 
           {/* Shared app chrome (HomeHeader + HomeFooter) — public */}
           <Route element={<MainLayout />}>

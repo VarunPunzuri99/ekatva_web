@@ -16,20 +16,26 @@ import {
 } from "lucide-react";
 import { homeAssets } from "@/assets/home";
 import { Logo } from "@/components/common/Logo";
-import { CHIEF_GUEST } from "@/content/launchGuest";
+import { CHIEF_GUESTS, type ChiefGuestContent } from "@/content/launchGuest";
 import { easeOutExpo } from "@/lib/animations";
-import { grantLaunchAccess, isValidLaunchCode } from "@/lib/launchAccess";
+import {
+  checkLaunchCode,
+  LaunchCodeApiError,
+  type LaunchDevice,
+} from "@/services/launchCodes";
 import { cn } from "@/lib/utils";
 
 interface LaunchAccessModalProps {
   open: boolean;
+  device: LaunchDevice;
   onClose: () => void;
+  onSuccess: (device: LaunchDevice) => void;
 }
 
 type Step = "guest" | "code";
 
 const HIGHLIGHT_ICONS: Record<
-  (typeof CHIEF_GUEST.highlights)[number]["icon"],
+  ChiefGuestContent["highlights"][number]["icon"],
   LucideIcon
 > = {
   document: FileText,
@@ -37,9 +43,20 @@ const HIGHLIGHT_ICONS: Record<
   building: Building2,
 };
 
-function GuestPortrait() {
+const FALLBACK_GUEST: ChiefGuestContent = {
+  greeting: "We are honored to have our esteemed Chief Guest",
+  name: "Chief Guest",
+  title: "Details to be announced",
+  highlights: [],
+  closing: "Official chief guest details will be announced shortly",
+  photo: null,
+  photoAlt: "Chief Guest",
+  initials: "CG",
+};
+
+function GuestPortrait({ guest }: { guest: ChiefGuestContent }) {
   const [failed, setFailed] = useState(false);
-  const photo = CHIEF_GUEST.photo ?? undefined;
+  const photo = guest.photo ?? undefined;
   const showPlaceholder = photo == null || failed;
 
   if (showPlaceholder) {
@@ -49,7 +66,7 @@ function GuestPortrait() {
         aria-hidden
       >
         <div className="flex h-20 w-20 items-center justify-center rounded-full border border-white/35 bg-white/12 font-home-display text-2xl font-semibold text-white sm:h-24 sm:w-24 sm:text-3xl">
-          {CHIEF_GUEST.initials}
+          {guest.initials}
         </div>
         <p className="mt-3 font-home text-[11px] tracking-[0.14em] text-white/70 uppercase sm:text-[12px]">
           To be announced
@@ -61,17 +78,23 @@ function GuestPortrait() {
   return (
     <img
       src={photo}
-      alt={CHIEF_GUEST.photoAlt}
-      className="h-full w-full object-cover object-[center_12%]"
+      alt={guest.photoAlt}
+      className="h-full w-full object-cover object-[center_20%]"
       onError={() => setFailed(true)}
     />
   );
 }
 
-export function LaunchAccessModal({ open, onClose }: LaunchAccessModalProps) {
+export function LaunchAccessModal({
+  open,
+  device,
+  onClose,
+  onSuccess,
+}: LaunchAccessModalProps) {
   const titleId = useId();
   const codeId = useId();
   const codeRef = useRef<HTMLInputElement>(null);
+  const guest = CHIEF_GUESTS[device] ?? FALLBACK_GUEST;
 
   const [step, setStep] = useState<Step>("guest");
   const [code, setCode] = useState("");
@@ -98,7 +121,7 @@ export function LaunchAccessModal({ open, onClose }: LaunchAccessModalProps) {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [open, onClose]);
+  }, [open, onClose, device]);
 
   useEffect(() => {
     if (!open || step !== "code") return;
@@ -108,18 +131,32 @@ export function LaunchAccessModal({ open, onClose }: LaunchAccessModalProps) {
 
   if (!open) return null;
 
-  function handleSubmitCode(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmitCode(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setError(null);
 
-    if (!isValidLaunchCode(code)) {
-      setError("That access code is not valid. Please try again.");
+    const trimmed = code.trim();
+    if (!trimmed) {
+      setError("Please enter the access code.");
       return;
     }
 
     setSubmitting(true);
-    grantLaunchAccess(CHIEF_GUEST.name);
-    onClose();
+    try {
+      await checkLaunchCode({ code: trimmed, device });
+      onSuccess(device);
+      onClose();
+    } catch (err) {
+      setError(
+        err instanceof LaunchCodeApiError
+          ? err.message
+          : err instanceof Error
+            ? err.message
+            : "That access code is not valid. Please try again.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   const isCodeStep = step === "code";
@@ -175,13 +212,11 @@ export function LaunchAccessModal({ open, onClose }: LaunchAccessModalProps) {
             className="pointer-events-none absolute inset-0 overflow-hidden bg-white"
             aria-hidden
           >
-            {/* Crop baked-in black vignette from bg_temple.png by zooming into the golden temple area */}
             <img
               src={homeAssets.bgTemple}
               alt=""
               className="absolute left-1/2 top-1/2 h-[165%] w-[165%] max-w-none -translate-x-1/2 -translate-y-[38%] object-cover"
             />
-            {/* Soft white wash at top so the orange mist reads as white */}
             <div
               className="absolute inset-x-0 top-0 h-[48%]"
               style={{
@@ -217,7 +252,7 @@ export function LaunchAccessModal({ open, onClose }: LaunchAccessModalProps) {
           <AnimatePresence mode="wait">
             {step === "guest" ? (
               <motion.div
-                key="guest"
+                key={`guest-${device}`}
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -16 }}
@@ -238,7 +273,7 @@ export function LaunchAccessModal({ open, onClose }: LaunchAccessModalProps) {
                     <div className="absolute -inset-2 rounded-[22px] bg-gradient-to-br from-[#F27022]/25 via-transparent to-[#FFB71C]/20 blur-md sm:-inset-2.5" />
                     <div className="relative overflow-hidden rounded-[18px] border border-white/70 shadow-[0_18px_44px_rgba(31,41,55,0.2)] ring-1 ring-[#F27022]/12 sm:rounded-[20px]">
                       <div className="aspect-[3/4] w-full bg-[#3D5A80]">
-                        <GuestPortrait />
+                        <GuestPortrait guest={guest} />
                       </div>
                       <div
                         className="pointer-events-none absolute inset-x-0 bottom-0 h-1/3"
@@ -256,18 +291,19 @@ export function LaunchAccessModal({ open, onClose }: LaunchAccessModalProps) {
                     id={titleId}
                     className="font-home text-[12px] leading-snug text-[#D97706] sm:text-[13px] md:text-[14px]"
                   >
-                    {CHIEF_GUEST.greeting}
+                    {guest.greeting}
                   </p>
                   <h2 className="mt-1.5 font-home-display text-[1.45rem] leading-[1.2] font-semibold tracking-tight text-[#9A3412] sm:mt-2 sm:text-[1.75rem] md:text-[1.95rem] lg:text-[2.15rem]">
-                    {CHIEF_GUEST.name}
+                    {guest.name}
                   </h2>
                   <p className="mx-auto mt-2 max-w-[36rem] font-home text-[12px] leading-relaxed text-[#57534E] sm:text-[13px] md:mx-0 md:text-[14px]">
-                    {CHIEF_GUEST.title}
+                    {guest.title}
                   </p>
 
                   <ul className="mt-4 space-y-2.5 text-left sm:mt-5 sm:space-y-3">
-                    {CHIEF_GUEST.highlights.map((item, index) => {
-                      const Icon = HIGHLIGHT_ICONS[item.icon];
+                    {(guest.highlights ?? []).map((item, index) => {
+                      if (!item) return null;
+                      const Icon = HIGHLIGHT_ICONS[item.icon] ?? FileText;
                       return (
                         <motion.li
                           key={item.id}
@@ -292,7 +328,7 @@ export function LaunchAccessModal({ open, onClose }: LaunchAccessModalProps) {
                   </ul>
 
                   <p className="mt-4 font-home text-[12.5px] leading-relaxed text-[#C2410C]/90 italic sm:mt-5 sm:text-[13.5px] md:text-[14px]">
-                    {CHIEF_GUEST.closing}
+                    {guest.closing}
                   </p>
 
                   <div className="mt-5 flex justify-center sm:mt-6 md:mt-7 md:justify-start lg:mt-8">
@@ -312,7 +348,7 @@ export function LaunchAccessModal({ open, onClose }: LaunchAccessModalProps) {
               </motion.div>
             ) : (
               <motion.div
-                key="code"
+                key={`code-${device}`}
                 initial={{ opacity: 0, scale: 0.97 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.98 }}
@@ -331,6 +367,9 @@ export function LaunchAccessModal({ open, onClose }: LaunchAccessModalProps) {
                   >
                     Enter Code
                   </h2>
+                  <p className="mt-2 font-home text-[13px] text-[#78716C]">
+                    {device} launch access
+                  </p>
 
                   <form
                     onSubmit={handleSubmitCode}
@@ -378,7 +417,7 @@ export function LaunchAccessModal({ open, onClose }: LaunchAccessModalProps) {
                       disabled={submitting}
                       className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-full border border-[#FFB71C] bg-gradient-to-r from-[#7F1D1D] via-[#C2410C] to-[#F27022] font-home text-[15px] font-semibold text-white shadow-[0_10px_28px_rgba(127,29,29,0.35)] transition-[transform,box-shadow,filter] duration-300 hover:-translate-y-0.5 hover:brightness-105 hover:shadow-[0_14px_34px_rgba(194,65,12,0.42)] active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-70 sm:h-14 sm:text-base"
                     >
-                      {submitting ? "Opening…" : "Submit"}
+                      {submitting ? "Verifying…" : "Submit"}
                       {!submitting && (
                         <ArrowRight
                           className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5"

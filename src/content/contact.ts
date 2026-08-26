@@ -34,7 +34,6 @@ export const CONTACT_QUERY_TYPES = [
   "General Inquiry",
   "Support",
   "Feedback",
-  "Partnership",
   "Booking Issue",
   "Other",
 ] as const;
@@ -58,6 +57,7 @@ export const COMPANY_CONTACT = {
   panelTitle: "Get in Touch",
   followTitle: "Follow Us",
   addressLines: [
+    "Metaglobe Technologies Private Limited",
     "Plot # 37 & 38, Serinity Square,",
     "Madhapur, Hyderabad,",
     "Telangana 500081",

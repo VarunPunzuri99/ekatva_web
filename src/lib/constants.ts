@@ -6,9 +6,6 @@ export function hasReachedLaunch(now = Date.now()) {
   return now >= LAUNCH_DATE.getTime();
 }
 
-/** Soft launch gate code — unlocks the protected home app. */
-export const LAUNCH_ACCESS_CODE = "ekatva";
-
 export const SITE_URL = "https://ekatva.com";
 
 export const SOCIAL_LINKS = {

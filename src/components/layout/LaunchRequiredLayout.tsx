@@ -1,26 +1,23 @@
-import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { MainLayout } from "@/components/layout/MainLayout";
-import {
-  LAUNCH_ACCESS_EVENT,
-  hasLaunchAccess,
-} from "@/lib/launchAccess";
+import { useWebLaunchStatus } from "@/hooks/useWebLaunchStatus";
 
-/** Requires launch unlock; otherwise sends users back to Coming Soon on `/`. */
+/**
+ * Feature routes require Web to be launched (no Active Web launch codes).
+ * Otherwise redirect to `/` (Coming Soon).
+ */
 export function LaunchRequiredLayout() {
-  const [unlocked, setUnlocked] = useState(() => hasLaunchAccess());
+  const { loading, webPending, error } = useWebLaunchStatus();
 
-  useEffect(() => {
-    const sync = () => setUnlocked(hasLaunchAccess());
-    window.addEventListener(LAUNCH_ACCESS_EVENT, sync);
-    window.addEventListener("storage", sync);
-    return () => {
-      window.removeEventListener(LAUNCH_ACCESS_EVENT, sync);
-      window.removeEventListener("storage", sync);
-    };
-  }, []);
+  if (loading) {
+    return (
+      <div className="flex min-h-dvh items-center justify-center bg-white">
+        <div className="h-9 w-9 animate-pulse rounded-full bg-[#F27022]/30" />
+      </div>
+    );
+  }
 
-  if (!unlocked) {
+  if (error || webPending) {
     return <Navigate to="/" replace />;
   }
 
