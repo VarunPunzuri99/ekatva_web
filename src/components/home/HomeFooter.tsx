@@ -125,6 +125,17 @@ function YouTubeIcon({ className }: { className?: string }) {
   );
 }
 
+function LinkedInIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} aria-hidden>
+      <path
+        fill="#0A66C2"
+        d="M22.2 0H1.8C.8 0 0 .8 0 1.8v20.4C0 23.2.8 24 1.8 24h20.4c1 0 1.8-.8 1.8-1.8V1.8C24 .8 23.2 0 22.2 0zM7.1 20.5H3.6V9h3.5v11.5zM5.3 7.4a2 2 0 1 1 0-4.1 2 2 0 0 1 0 4.1zM20.5 20.5h-3.5v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.6V9h3.3v1.6h.1c.5-.9 1.6-1.8 3.3-1.8 3.5 0 4.2 2.3 4.2 5.3v6.4z"
+      />
+    </svg>
+  );
+}
+
 function DiyaIllustration({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 72 64" className={className} aria-hidden>
@@ -218,17 +229,21 @@ function SocialButton({
 }: {
   href: string;
   label: string;
-  kind: "facebook" | "instagram" | "youtube";
+  kind: "facebook" | "instagram" | "youtube" | "linkedin";
 }) {
+  const isExternal = href.startsWith("http");
   return (
     <a
       href={href}
       aria-label={label}
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noopener noreferrer" : undefined}
       className="inline-flex items-center gap-1.5 rounded-md border border-[#C9C9C9] bg-white px-2 py-1.5 shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-colors hover:border-[#A3A3A3] sm:gap-2 sm:px-2.5"
     >
       {kind === "facebook" && <FacebookIcon className="h-4 w-4" />}
       {kind === "instagram" && <InstagramIcon className="h-4 w-4" />}
       {kind === "youtube" && <YouTubeIcon className="h-4 w-4" />}
+      {kind === "linkedin" && <LinkedInIcon className="h-4 w-4" />}
       <span className="font-home text-[11px] font-medium text-[#374151] sm:text-[12px]">
         {label}
       </span>

@@ -1,5 +1,7 @@
 /** Contact page copy aligned to UX mock screens. */
 
+import { SOCIAL_LINKS } from "@/lib/constants";
+
 export const CONTACT_HERO = {
   eyebrow: "Contact",
   title: "We're Here to Help You",
@@ -74,22 +76,22 @@ export const COMPANY_CONTACT = {
   social: [
     {
       label: "Facebook",
-      href: "https://www.facebook.com/ekatva/",
+      href: SOCIAL_LINKS.facebook,
       kind: "facebook" as const,
     },
     {
       label: "Instagram",
-      href: "https://www.instagram.com/ekatva_online/",
+      href: SOCIAL_LINKS.instagram,
       kind: "instagram" as const,
     },
     {
       label: "YouTube",
-      href: "https://www.youtube.com/@ekatva.online",
+      href: SOCIAL_LINKS.youtube,
       kind: "youtube" as const,
     },
     {
       label: "LinkedIn",
-      href: "https://www.linkedin.com/company/ekatvaonline/posts/?viewAsMember=true",
+      href: SOCIAL_LINKS.linkedin,
       kind: "linkedin" as const,
     },
   ],

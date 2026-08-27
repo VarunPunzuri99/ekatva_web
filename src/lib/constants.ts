@@ -9,9 +9,9 @@ export function hasReachedLaunch(now = Date.now()) {
 export const SITE_URL = "https://ekatva.com";
 
 export const SOCIAL_LINKS = {
-  instagram: "https://instagram.com/ekatva",
-  twitter: "https://twitter.com/ekatva",
-  youtube: "https://youtube.com/ekatva",
-  facebook: "https://facebook.com/ekatva",
-  linkedin: "https://linkedin.com/company/ekatva",
+  facebook: "https://www.facebook.com/ekatva/",
+  instagram: "https://www.instagram.com/ekatva_online/",
+  youtube: "https://www.youtube.com/@ekatva.online",
+  linkedin:
+    "https://www.linkedin.com/company/ekatvaonline/posts/?viewAsMember=true",
 } as const;

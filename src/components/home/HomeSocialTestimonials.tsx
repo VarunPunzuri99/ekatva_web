@@ -5,7 +5,7 @@ import {
   FacebookIcon,
   InstagramIcon,
   LinkedInIcon,
-  TwitterIcon,
+  YoutubeIcon,
 } from "@/components/common/SocialIcons";
 import { HOME_TESTIMONIALS } from "@/content/home";
 import { SOCIAL_LINKS } from "@/lib/constants";
@@ -19,10 +19,10 @@ import {
 
 const SOCIAL_ITEMS = [
   {
-    href: SOCIAL_LINKS.twitter,
-    label: "X (Twitter)",
-    Icon: TwitterIcon,
-    color: "#000000",
+    href: SOCIAL_LINKS.youtube,
+    label: "YouTube",
+    Icon: YoutubeIcon,
+    color: "#FF0000",
   },
   {
     href: SOCIAL_LINKS.facebook,

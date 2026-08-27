@@ -1,5 +1,7 @@
 /** Home page content aligned to UX mock screens. */
 
+import { SOCIAL_LINKS } from "@/lib/constants";
+
 export const HOME_NAV = [
   { label: "Features", href: "/features" },
   { label: "Events", href: "/events" },
@@ -173,9 +175,26 @@ export const HOME_FOOTER = {
     },
   ],
   social: [
-    { label: "Facebook", href: "#", kind: "facebook" as const },
-    { label: "Instagram", href: "#", kind: "instagram" as const },
-    { label: "YouTube", href: "#", kind: "youtube" as const },
+    {
+      label: "Facebook",
+      href: SOCIAL_LINKS.facebook,
+      kind: "facebook" as const,
+    },
+    {
+      label: "Instagram",
+      href: SOCIAL_LINKS.instagram,
+      kind: "instagram" as const,
+    },
+    {
+      label: "YouTube",
+      href: SOCIAL_LINKS.youtube,
+      kind: "youtube" as const,
+    },
+    {
+      label: "LinkedIn",
+      href: SOCIAL_LINKS.linkedin,
+      kind: "linkedin" as const,
+    },
   ],
   payments: ["VISA", "Mastercard", "RuPay", "UPI", "Net Banking"] as const,
 } as const;

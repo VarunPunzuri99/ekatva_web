@@ -2,7 +2,6 @@ import { Logo } from "@/components/common/Logo";
 import {
   FacebookIcon,
   InstagramIcon,
-  TwitterIcon,
   YoutubeIcon,
 } from "@/components/common/SocialIcons";
 import { SOCIAL_LINKS } from "@/lib/constants";
@@ -17,7 +16,6 @@ const quickLinks = [
 
 const socialIcons = [
   { icon: InstagramIcon, href: SOCIAL_LINKS.instagram, label: "Instagram" },
-  { icon: TwitterIcon, href: SOCIAL_LINKS.twitter, label: "Twitter" },
   { icon: YoutubeIcon, href: SOCIAL_LINKS.youtube, label: "YouTube" },
   { icon: FacebookIcon, href: SOCIAL_LINKS.facebook, label: "Facebook" },
 ];
