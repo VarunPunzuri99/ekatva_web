@@ -74,23 +74,23 @@ export const COMPANY_CONTACT = {
   social: [
     {
       label: "Facebook",
-      href: "#",
+      href: "https://www.facebook.com/ekatva/",
       kind: "facebook" as const,
     },
     {
       label: "Instagram",
-      href: "#",
+      href: "https://www.instagram.com/ekatva_online/",
       kind: "instagram" as const,
     },
     {
       label: "YouTube",
-      href: "#",
+      href: "https://www.youtube.com/@ekatva.online",
       kind: "youtube" as const,
     },
     {
-      label: "WhatsApp",
-      href: "https://wa.me/916303515006",
-      kind: "whatsapp" as const,
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/company/ekatvaonline/posts/?viewAsMember=true",
+      kind: "linkedin" as const,
     },
   ],
 } as const;

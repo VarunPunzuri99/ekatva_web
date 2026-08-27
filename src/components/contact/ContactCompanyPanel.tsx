@@ -49,12 +49,12 @@ function YouTubeGlyph({ className }: { className?: string }) {
   );
 }
 
-function WhatsAppGlyph({ className }: { className?: string }) {
+function LinkedInGlyph({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" className={className} aria-hidden>
       <path
-        fill="#25D366"
-        d="M12 2a9.9 9.9 0 0 0-8.5 14.9L2 22l5.3-1.4A9.9 9.9 0 1 0 12 2zm5.8 14.1c-.2.7-1.3 1.2-2.1 1.4-.6.1-1.3.2-3.8-.8-3.2-1.3-5.2-4.6-5.4-4.8-.2-.2-1.5-2-1.5-3.8s1-2.7 1.3-3.1c.3-.4.7-.5 1-.5h.7c.2 0 .5 0 .7.6.3.7.9 2.3 1 2.5.1.2.1.4 0 .6-.1.2-.2.4-.3.5-.1.1-.3.3-.1.6.2.3.7 1.2 1.6 1.9 1.1.9 2 1.2 2.3 1.3.3.1.5.1.7-.1.2-.2.8-.9 1-.12.2-.3.5-.2.8-.1.3.1 2 .9 2.3 1.1.3.2.5.3.6.4.1.2.1.7-.1 1.4z"
+        fill="#0A66C2"
+        d="M22.2 0H1.8C.8 0 0 .8 0 1.8v20.4C0 23.2.8 24 1.8 24h20.4c1 0 1.8-.8 1.8-1.8V1.8C24 .8 23.2 0 22.2 0zM7.1 20.5H3.6V9h3.5v11.5zM5.3 7.4a2 2 0 1 1 0-4.1 2 2 0 0 1 0 4.1zM20.5 20.5h-3.5v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.6V9h3.3v1.6h.1c.5-.9 1.6-1.8 3.3-1.8 3.5 0 4.2 2.3 4.2 5.3v6.4z"
       />
     </svg>
   );
@@ -64,7 +64,7 @@ const SOCIAL_ICONS = {
   facebook: FacebookGlyph,
   instagram: InstagramGlyph,
   youtube: YouTubeGlyph,
-  whatsapp: WhatsAppGlyph,
+  linkedin: LinkedInGlyph,
 } as const;
 
 const touchItems = [
