@@ -304,20 +304,16 @@ export function ContactForm() {
     setLoading(true);
     try {
       const result = await submitContact({
-        name: name.trim(),
+        fullName: name.trim(),
         email: email.trim(),
-        phone: normalizePhone(phone.trim()),
+        phoneNumber: normalizePhone(phone.trim()),
         queryType,
         message: message.trim(),
-        // attachmentName: file?.name,
       });
       toast({
         variant: "success",
         title: CONTACT_PAGE.successTitle,
-        description:
-          result.via === "mailto"
-            ? "Your email app should open with the message ready to send."
-            : CONTACT_PAGE.successDescription,
+        description: result.message ?? CONTACT_PAGE.successDescription,
       });
       setName("");
       setEmail("");

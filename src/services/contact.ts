@@ -1,13 +1,18 @@
 import { getApiBaseUrl } from "@/lib/api";
-import { COMPANY_CONTACT } from "@/content/contact";
 
+/** Matches POST /api/contact-us request body fields. */
 export interface ContactPayload {
-  name: string;
+  fullName: string;
   email: string;
-  phone: string;
+  phoneNumber: string;
   queryType: string;
   message: string;
-  attachmentName?: string;
+}
+
+export interface ContactResponse {
+  status?: string;
+  message?: string;
+  [key: string]: unknown;
 }
 
 export class ContactApiError extends Error {
@@ -20,61 +25,56 @@ export class ContactApiError extends Error {
   }
 }
 
-function openMailtoFallback(payload: ContactPayload): void {
-  const subject = encodeURIComponent(
-    `Ekatva contact — ${payload.queryType} — ${payload.name}`,
-  );
-  const attachmentLine = payload.attachmentName
-    ? `\nAttachment noted: ${payload.attachmentName}`
-    : "";
-  const body = encodeURIComponent(
-    `Name: ${payload.name}\nEmail: ${payload.email}\nPhone: ${payload.phone}\nQuery: ${payload.queryType}${attachmentLine}\n\n${payload.message}`,
-  );
-  window.location.href = `${COMPANY_CONTACT.emailHref}?subject=${subject}&body=${body}`;
-}
-
 /**
- * POST /api/contact — preferred path when the API is configured.
- * Falls back to mailto if the env/base URL is missing or the request fails hard.
+ * POST /api/contact-us — submit a contact us form.
+ * No auth required. Body is application/x-www-form-urlencoded.
  */
 export async function submitContact(
   payload: ContactPayload,
-): Promise<{ via: "api" | "mailto" }> {
-  let base: string;
-  try {
-    base = getApiBaseUrl();
-  } catch {
-    openMailtoFallback(payload);
-    return { via: "mailto" };
-  }
+): Promise<ContactResponse> {
+  const url = `${getApiBaseUrl()}/api/contact-us`;
+
+  const body = new URLSearchParams({
+    fullName: payload.fullName,
+    email: payload.email,
+    phoneNumber: payload.phoneNumber,
+    queryType: payload.queryType,
+    message: payload.message,
+  });
 
   let response: Response;
   try {
-    response = await fetch(`${base}/api/contact`, {
+    response = await fetch(url, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
         Accept: "application/json",
       },
-      body: JSON.stringify(payload),
+      body: body.toString(),
     });
   } catch {
-    openMailtoFallback(payload);
-    return { via: "mailto" };
+    throw new ContactApiError(
+      "Unable to reach the server. Please check your connection and try again.",
+      0,
+    );
+  }
+
+  let data: ContactResponse = {};
+  try {
+    data = (await response.json()) as ContactResponse;
+  } catch {
+    // Non-JSON body is fine for some success responses
   }
 
   if (!response.ok) {
-    let message = "Something went wrong. Please try again later.";
-    try {
-      const data = (await response.json()) as { message?: string };
-      if (typeof data.message === "string" && data.message) {
-        message = data.message;
-      }
-    } catch {
-      // ignore non-JSON
-    }
+    const message =
+      (typeof data.message === "string" && data.message) ||
+      (response.status === 400
+        ? "Please check your details and try again."
+        : "Something went wrong. Please try again later.");
+
     throw new ContactApiError(message, response.status);
   }
 
-  return { via: "api" };
+  return data;
 }
