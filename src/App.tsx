@@ -1,6 +1,5 @@
 import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { LaunchRequiredLayout } from "@/components/layout/LaunchRequiredLayout";
 import { MainLayout } from "@/components/layout/MainLayout";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { Toaster } from "@/components/ui/toaster";
@@ -20,10 +19,9 @@ import { EventPoojaDetailPage } from "@/pages/EventPoojaDetailPage";
 import { EventsPage } from "@/pages/EventsPage";
 import { FaqPage } from "@/pages/FaqPage";
 import { FeaturesPage } from "@/pages/FeaturesPage";
+import { HomePage } from "@/pages/HomePage";
 import { KundliPage } from "@/pages/KundliPage";
 import { PanchangamPage } from "@/pages/PanchangamPage";
-import { RootPage } from "@/pages/RootPage";
-import { LaunchPage } from "@/pages/LaunchPage";
 import { PrivacyPolicyPage } from "@/pages/PrivacyPolicyPage";
 import { TermsPage } from "@/pages/TermsPage";
 import { RefundPolicyPage } from "@/pages/RefundPolicyPage";
@@ -34,11 +32,10 @@ function App() {
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
-          <Route path="/" element={<RootPage />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/home" element={<Navigate to="/" replace />} />
-          <Route path="/launch" element={<LaunchPage />} />
+          <Route path="/launch" element={<Navigate to="/" replace />} />
 
-          {/* Shared app chrome (HomeHeader + HomeFooter) — public */}
           <Route element={<MainLayout />}>
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact-us" element={<ContactPage />} />
@@ -49,9 +46,6 @@ function App() {
               path="/cancellation-refund-policy"
               element={<RefundPolicyPage />}
             />
-          </Route>
-
-          <Route element={<LaunchRequiredLayout />}>
             <Route path="/book-pandit" element={<BookPanditPage />} />
             <Route
               path="/book-pandit/:poojaId"

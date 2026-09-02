@@ -3,6 +3,7 @@ import { Download } from "lucide-react";
 import { useRef } from "react";
 import { homeAssets } from "@/assets/home";
 import { StoreBadge, StoreQr } from "@/components/home/StoreBadges";
+import { getDownloadAppHref, isExternalAppStoreHref } from "@/lib/appStore";
 import {
   fadeUp,
   floatingMotion,
@@ -24,6 +25,8 @@ export function HomeHero() {
     offset: ["start start", "end start"],
   });
   const phoneY = useTransform(scrollYProgress, [0, 1], [0, reduced ? 0 : 36]);
+  const downloadHref = getDownloadAppHref(true);
+  const downloadExternal = isExternalAppStoreHref(downloadHref);
 
   return (
     <section
@@ -84,7 +87,9 @@ export function HomeHero() {
           </m.p>
 
           <m.a
-            href="#download"
+            href={downloadHref}
+            target={downloadExternal ? "_blank" : undefined}
+            rel={downloadExternal ? "noopener noreferrer" : undefined}
             variants={scaleIn}
             className="btn-shine mt-7 inline-flex items-center gap-2.5 rounded-lg bg-[#F27022] px-6 py-3.5 font-home text-[15px] font-semibold text-white shadow-[0_8px_20px_rgba(242,112,34,0.28)] transition-[transform,background-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:bg-[#E06518] hover:shadow-[0_12px_28px_rgba(242,112,34,0.34)] active:translate-y-0 xl:mt-8 xl:px-7 xl:py-4 xl:text-base"
           >

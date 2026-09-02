@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useOnlinePoojaEvents } from "@/hooks/useOnlinePoojaEvents";
 import { fadeUp, staggerContainer, viewportOnce } from "@/lib/animations";
+import { isUpcomingEvent } from "@/services/onlinePooja";
 
 const HOME_EVENTS_LIMIT = 4;
 
@@ -22,8 +23,10 @@ function EventCardSkeleton() {
 export function HomeEvents() {
   const { events, loading, error, refetch } = useOnlinePoojaEvents();
 
-  // Home preview: max 4. Full list lives on /events via View All.
-  const visibleEvents = events.slice(0, HOME_EVENTS_LIMIT);
+  // Home preview: only future events, max 4. Full list lives on /events via View All.
+  const visibleEvents = events
+    .filter((event) => isUpcomingEvent(event))
+    .slice(0, HOME_EVENTS_LIMIT);
 
   const showEmpty = !loading && !error && visibleEvents.length === 0;
 

@@ -202,9 +202,12 @@ function StoreButton({
   store: string;
   kind: "google" | "apple";
 }) {
+  const isExternal = href.startsWith("http");
   return (
     <a
       href={href}
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noopener noreferrer" : undefined}
       className="inline-flex min-w-0 flex-1 items-center gap-1.5 rounded-md border border-[#C9C9C9] bg-white px-2 py-1.5 shadow-[0_1px_2px_rgba(0,0,0,0.04)] transition-colors hover:border-[#A3A3A3] sm:gap-2 sm:px-2.5"
     >
       {kind === "google" ? (

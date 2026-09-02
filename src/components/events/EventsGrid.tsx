@@ -13,17 +13,32 @@ import { EVENT_SORT_OPTIONS, type EventSort } from "@/content/events";
 import { useOnlinePoojaEvents } from "@/hooks/useOnlinePoojaEvents";
 import { easeOutExpo, fadeUp, staggerContainer } from "@/lib/animations";
 import { cn } from "@/lib/utils";
-import type { OnlinePoojaEvent } from "@/services/onlinePooja";
+import {
+  isPastEvent,
+  isUpcomingEvent,
+  type OnlinePoojaEvent,
+} from "@/services/onlinePooja";
 
 function EventCard({ event }: { event: OnlinePoojaEvent }) {
+  const completed = isPastEvent(event);
+
   return (
     <m.article
       variants={fadeUp}
-      whileHover={{
-        y: -4,
-        transition: { duration: 0.25, ease: easeOutExpo },
-      }}
-      className="group flex h-full flex-col overflow-hidden rounded-[14px] border border-black/[0.06] bg-white shadow-[0_4px_18px_rgba(31,41,55,0.06)] transition-shadow duration-300 hover:shadow-[0_12px_28px_rgba(31,41,55,0.1)]"
+      whileHover={
+        completed
+          ? undefined
+          : {
+              y: -4,
+              transition: { duration: 0.25, ease: easeOutExpo },
+            }
+      }
+      className={cn(
+        "group flex h-full flex-col overflow-hidden rounded-[14px] border bg-white transition-shadow duration-300",
+        completed
+          ? "border-[#E5E7EB] bg-[#FAFAFA] shadow-none"
+          : "border-black/[0.06] shadow-[0_4px_18px_rgba(31,41,55,0.06)] hover:shadow-[0_12px_28px_rgba(31,41,55,0.1)]",
+      )}
     >
       <Link
         to={`/events/${event.id}`}
@@ -34,50 +49,103 @@ function EventCard({ event }: { event: OnlinePoojaEvent }) {
           <img
             src={event.image}
             alt={event.title}
-            className="absolute inset-0 h-full w-full object-cover"
+            className={cn(
+              "absolute inset-0 h-full w-full object-cover",
+              completed && "opacity-55 saturate-[0.35] grayscale",
+            )}
             style={{ objectPosition: "center top" }}
             loading="lazy"
             decoding="async"
           />
         ) : (
-          <div className="absolute inset-0 flex items-center justify-center font-home text-[13px] text-[#9CA3AF]">
+          <div
+            className={cn(
+              "absolute inset-0 flex items-center justify-center font-home text-[13px] text-[#9CA3AF]",
+              completed && "opacity-60",
+            )}
+          >
             {event.category}
           </div>
         )}
-        <div className="absolute top-2.5 right-2.5 z-10 flex min-w-[48px] flex-col items-center rounded-md bg-white px-2 py-1.5 text-center shadow-[0_2px_8px_rgba(0,0,0,0.12)] sm:min-w-[52px]">
-          <span className="font-home text-[18px] leading-none font-bold text-[#1A1A1A] sm:text-[20px]">
+        {completed && (
+          <span className="absolute top-2.5 left-2.5 z-10 rounded-full bg-[#6B7280]/90 px-2.5 py-1 font-home text-[10px] font-semibold tracking-wide text-white uppercase sm:text-[11px]">
+            Completed
+          </span>
+        )}
+        <div
+          className={cn(
+            "absolute top-2.5 right-2.5 z-10 flex min-w-[48px] flex-col items-center rounded-md px-2 py-1.5 text-center shadow-[0_2px_8px_rgba(0,0,0,0.12)] sm:min-w-[52px]",
+            completed ? "bg-[#F3F4F6]" : "bg-white",
+          )}
+        >
+          <span
+            className={cn(
+              "font-home text-[18px] leading-none font-bold sm:text-[20px]",
+              completed ? "text-[#9CA3AF]" : "text-[#1A1A1A]",
+            )}
+          >
             {event.day}
           </span>
-          <span className="mt-0.5 font-home text-[10px] leading-tight font-medium text-[#6B7280] sm:text-[11px]">
+          <span
+            className={cn(
+              "mt-0.5 font-home text-[10px] leading-tight font-medium sm:text-[11px]",
+              completed ? "text-[#9CA3AF]" : "text-[#6B7280]",
+            )}
+          >
             {event.month} {event.weekday}
           </span>
         </div>
       </div>
 
       <div className="flex flex-1 flex-col px-3.5 pt-3.5 pb-3.5 sm:px-4 sm:pt-4 sm:pb-4">
-        <p className="font-home text-[11px] font-medium text-[#C4A35A] sm:text-[12px]">
+        <p
+          className={cn(
+            "font-home text-[11px] font-medium sm:text-[12px]",
+            completed ? "text-[#9CA3AF]" : "text-[#C4A35A]",
+          )}
+        >
           {event.category}
         </p>
-        <h3 className="mt-1 font-home text-[15px] font-bold leading-snug text-home-text sm:text-[16px]">
+        <h3
+          className={cn(
+            "mt-1 font-home text-[15px] font-bold leading-snug sm:text-[16px]",
+            completed ? "text-[#9CA3AF]" : "text-home-text",
+          )}
+        >
           {event.title}
         </h3>
 
         <ul className="mt-2.5 space-y-1.5">
-          <li className="flex items-start gap-2 font-home text-[12px] text-[#6B7280] sm:text-[13px]">
+          <li
+            className={cn(
+              "flex items-start gap-2 font-home text-[12px] sm:text-[13px]",
+              completed ? "text-[#9CA3AF]" : "text-[#6B7280]",
+            )}
+          >
             <MapPin
               className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#9CA3AF]"
               strokeWidth={2}
             />
             <span>{event.location}</span>
           </li>
-          <li className="flex items-start gap-2 font-home text-[12px] text-[#6B7280] sm:text-[13px]">
+          <li
+            className={cn(
+              "flex items-start gap-2 font-home text-[12px] sm:text-[13px]",
+              completed ? "text-[#9CA3AF]" : "text-[#6B7280]",
+            )}
+          >
             <CalendarDays
               className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#9CA3AF]"
               strokeWidth={2}
             />
             <span>{event.dateLabel}</span>
           </li>
-          <li className="flex items-start gap-2 font-home text-[12px] text-[#6B7280] sm:text-[13px]">
+          <li
+            className={cn(
+              "flex items-start gap-2 font-home text-[12px] sm:text-[13px]",
+              completed ? "text-[#9CA3AF]" : "text-[#6B7280]",
+            )}
+          >
             <Clock
               className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#9CA3AF]"
               strokeWidth={2}
@@ -86,12 +154,27 @@ function EventCard({ event }: { event: OnlinePoojaEvent }) {
           </li>
         </ul>
 
-        <div className="mt-auto mt-3.5 flex items-center justify-between border-t border-[#EFE7DC] pt-3">
-          <span className="font-home text-[13px] font-medium text-[#F27022]">
+        <div
+          className={cn(
+            "mt-auto mt-3.5 flex items-center justify-between border-t pt-3",
+            completed ? "border-[#E5E7EB]" : "border-[#EFE7DC]",
+          )}
+        >
+          <span
+            className={cn(
+              "font-home text-[13px] font-medium",
+              completed ? "text-[#9CA3AF]" : "text-[#F27022]",
+            )}
+          >
             View Details
           </span>
           <ChevronRight
-            className="h-4 w-4 text-[#F27022] transition-transform duration-200 group-hover:translate-x-0.5"
+            className={cn(
+              "h-4 w-4 transition-transform duration-200",
+              completed
+                ? "text-[#9CA3AF]"
+                : "text-[#F27022] group-hover:translate-x-0.5",
+            )}
             strokeWidth={2.25}
             aria-hidden
           />
@@ -228,14 +311,26 @@ export function EventsGrid() {
   const { events: apiEvents, loading, error, refetch } = useOnlinePoojaEvents();
 
   const events = useMemo(() => {
-    const list = [...apiEvents];
-    list.sort((a, b) =>
-      sort === "upcoming"
-        ? a.sortDate.localeCompare(b.sortDate)
-        : b.sortDate.localeCompare(a.sortDate),
-    );
+    let list = [...apiEvents];
+
+    if (sort === "upcoming") {
+      list = list.filter((event) => isUpcomingEvent(event));
+      list.sort((a, b) => a.sortDate.localeCompare(b.sortDate));
+    } else if (sort === "latest") {
+      list.sort((a, b) => b.sortDate.localeCompare(a.sortDate));
+    } else {
+      list.sort((a, b) => a.sortDate.localeCompare(b.sortDate));
+    }
+
     return list;
   }, [apiEvents, sort]);
+
+  const emptyMessage =
+    sort === "upcoming"
+      ? "No upcoming poojas available at the moment."
+      : sort === "all"
+        ? "No events available at the moment."
+        : "No events available at the moment.";
 
   const showGrid = loading || (!error && events.length > 0);
 
@@ -272,7 +367,7 @@ export function EventsGrid() {
 
         {!loading && !error && events.length === 0 && (
           <p className="mt-6 text-center font-home text-[14px] text-[#6B7280] sm:mt-7">
-            No upcoming poojas available at the moment.
+            {emptyMessage}
           </p>
         )}
 

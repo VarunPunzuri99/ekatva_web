@@ -7,9 +7,10 @@ export const EVENTS_HERO = {
     "Stay connected with divine celebrations, rituals, discourses and spiritual talks happening around you and online.",
 } as const;
 
-export type EventSort = "upcoming" | "latest";
+export type EventSort = "all" | "upcoming" | "latest";
 
 export const EVENT_SORT_OPTIONS = [
+  { value: "all" as const, label: "All" },
   { value: "upcoming" as const, label: "Upcoming" },
   { value: "latest" as const, label: "Latest" },
 ] as const;

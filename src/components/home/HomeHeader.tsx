@@ -4,6 +4,7 @@ import { Download, Menu, X } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Logo } from "@/components/common/Logo";
 import { HOME_NAV } from "@/content/home";
+import { getDownloadAppHref, isExternalAppStoreHref } from "@/lib/appStore";
 import { requestScrollTop } from "@/lib/scrollTop";
 import { easeOutExpo, slideDown } from "@/lib/animations";
 import { cn } from "@/lib/utils";
@@ -58,6 +59,9 @@ export function HomeHeader() {
     const active = isRoute && pathname === item.href;
     return { ...item, isRoute, href, active };
   });
+
+  const downloadHref = getDownloadAppHref(onHome);
+  const downloadExternal = isExternalAppStoreHref(downloadHref);
 
   return (
     <>
@@ -133,7 +137,9 @@ export function HomeHeader() {
 
           <div className="flex items-center gap-2 sm:gap-3">
             <a
-              href={onHome ? "#download" : "/#download"}
+              href={downloadHref}
+              target={downloadExternal ? "_blank" : undefined}
+              rel={downloadExternal ? "noopener noreferrer" : undefined}
               className="btn-shine hidden items-center gap-2 rounded-md bg-home-orange px-3.5 py-2.5 font-home text-[11px] font-semibold tracking-wide text-white uppercase shadow-[0_4px_14px_rgba(242,112,34,0.25)] transition-[transform,background-color,box-shadow] duration-300 hover:-translate-y-0.5 hover:bg-home-orange-deep hover:shadow-[0_8px_20px_rgba(242,112,34,0.32)] active:translate-y-0 sm:inline-flex sm:px-4 sm:text-xs"
             >
               <Download className="h-3.5 w-3.5" aria-hidden="true" />
@@ -242,7 +248,9 @@ export function HomeHeader() {
 
               <div className="border-t border-black/8 p-4">
                 <a
-                  href={onHome ? "#download" : "/#download"}
+                  href={downloadHref}
+                  target={downloadExternal ? "_blank" : undefined}
+                  rel={downloadExternal ? "noopener noreferrer" : undefined}
                   onClick={closeMenu}
                   className="btn-shine flex w-full items-center justify-center gap-2 rounded-md bg-home-orange px-4 py-3.5 font-home text-[13px] font-semibold tracking-wide text-white uppercase shadow-[0_4px_14px_rgba(242,112,34,0.25)]"
                 >

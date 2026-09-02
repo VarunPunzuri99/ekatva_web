@@ -1,5 +1,6 @@
 /** Home page content aligned to UX mock screens. */
 
+import { APP_STORE_LINKS } from "@/lib/appStore";
 import { SOCIAL_LINKS } from "@/lib/constants";
 
 export const HOME_NAV = [
@@ -164,13 +165,13 @@ export const HOME_FOOTER = {
     {
       label: "Get it on",
       store: "GooglePlay",
-      href: "#",
+      href: APP_STORE_LINKS.googlePlay,
       kind: "google" as const,
     },
     {
       label: "Get it on",
       store: "App Store",
-      href: "#",
+      href: APP_STORE_LINKS.appStore,
       kind: "apple" as const,
     },
   ],

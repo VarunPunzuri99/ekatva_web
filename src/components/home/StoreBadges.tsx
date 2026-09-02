@@ -1,40 +1,46 @@
+import { getAppStoreHref, type AppStoreKind } from "@/lib/appStore";
 import { cn } from "@/lib/utils";
 import appleStoreQr from "@/assets/images/AppleStore_QRcode.jpeg";
 import googlePlayQr from "@/assets/images/Googleplay_QRcode.jpeg";
 
 interface StoreQrProps {
-  store: "google" | "apple";
+  store: AppStoreKind;
   className?: string;
 }
 
-/** Scannable store QR — Google Play / App Store download links. */
+/** Scannable store QR — also tappable link to the store listing. */
 export function StoreQr({ store, className }: StoreQrProps) {
   const isGoogle = store === "google";
+  const href = getAppStoreHref(store);
 
   return (
-    <div
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={
+        isGoogle
+          ? "Get Ekatva on Google Play"
+          : "Download Ekatva on the App Store"
+      }
       className={cn(
-        "flex h-[72px] w-[72px] shrink-0 items-center justify-center overflow-hidden rounded-[4px] border border-[#D1D5DB] bg-white p-1",
+        "flex h-[72px] w-[72px] shrink-0 items-center justify-center overflow-hidden rounded-[4px] border border-[#D1D5DB] bg-white p-1 transition-[border-color,box-shadow] hover:border-[#9CA3AF] hover:shadow-sm",
         className,
       )}
     >
       <img
         src={isGoogle ? googlePlayQr : appleStoreQr}
-        alt={
-          isGoogle
-            ? "Scan to download Ekatva on Google Play"
-            : "Scan to download Ekatva on the App Store"
-        }
+        alt=""
         className="h-full w-full object-contain"
         loading="lazy"
         decoding="async"
       />
-    </div>
+    </a>
   );
 }
 
 interface StoreBadgeProps {
-  store: "google" | "apple";
+  store: AppStoreKind;
   className?: string;
   variant?: "light" | "dark";
 }
@@ -47,10 +53,13 @@ export function StoreBadge({
 }: StoreBadgeProps) {
   const isGoogle = store === "google";
   const isDark = variant === "dark";
+  const href = getAppStoreHref(store);
 
   return (
     <a
-      href="#"
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
       className={cn(
         "inline-flex h-10 items-center gap-2 rounded-md px-3 shadow-sm transition-opacity hover:opacity-90",
         isDark

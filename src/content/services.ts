@@ -17,14 +17,6 @@ const ePuja = {
   href: "/epuja",
 } as const;
 
-const aiAstroguru = {
-  icon: "/assets/service-astrology.png",
-  title: "AI ASTROGURU",
-  description:
-    "Consult with expert astrologers for guidance on life's important decisions.",
-  href: "/astroguru",
-} as const;
-
 const eJapa = {
   icon: "/assets/service-japa.png",
   title: "eJAPA",
@@ -73,16 +65,5 @@ export const SERVICES = [
   eDisti,
   ePradakshina,
   ePanchangam,
-  eWish,
-] as const;
-
-/** Coming Soon landing cards. */
-export const COMING_SOON_SERVICES = [
-  ePandit,
-  ePuja,
-  aiAstroguru,
-  eJapa,
-  eDisti,
-  ePradakshina,
   eWish,
 ] as const;

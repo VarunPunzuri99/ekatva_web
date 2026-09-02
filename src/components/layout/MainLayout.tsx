@@ -3,7 +3,7 @@ import { HomeFooter } from "@/components/home/HomeFooter";
 import { HomeHeader } from "@/components/home/HomeHeader";
 import { AppMotionProvider } from "@/components/layout/AppMotionProvider";
 
-/** Shared app chrome: HomeHeader + page + HomeFooter (public + gated routes). */
+/** Shared app chrome: HomeHeader + page + HomeFooter. */
 export function MainLayout() {
   return (
     <AppMotionProvider>

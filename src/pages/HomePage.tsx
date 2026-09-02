@@ -11,10 +11,12 @@ import { HomeMotionProvider } from "@/components/home/HomeMotionProvider";
 import { HomeServices } from "@/components/home/HomeServices";
 import { HomeSocialTestimonials } from "@/components/home/HomeSocialTestimonials";
 import { HomeWhyChoose } from "@/components/home/HomeWhyChoose";
+import { SEO } from "@/components/layout/SEO";
 
 export function HomePage() {
   return (
     <HomeMotionProvider>
+      <SEO />
       <HomeFreshStart />
       <div className="min-h-screen bg-white font-home text-home-text antialiased">
         <HomeHeader />

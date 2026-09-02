@@ -455,6 +455,13 @@ export function isUpcomingEvent(
   return parseEventDate(event.datetime).getTime() >= now.getTime();
 }
 
+export function isPastEvent(
+  event: OnlinePoojaEvent,
+  now = new Date(),
+): boolean {
+  return parseEventDate(event.datetime).getTime() < now.getTime();
+}
+
 export function formatInr(amount: number): string {
   return new Intl.NumberFormat("en-IN", {
     style: "currency",

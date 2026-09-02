@@ -3,9 +3,9 @@ import { SITE_URL } from "@/lib/constants";
 import { colors } from "@/theme/colors";
 
 const META = {
-  title: "Ekatva | Launching August 28, 2026",
+  title: "Ekatva | Spiritual Companion",
   description:
-    "Experience ancient wisdom through modern spiritual guidance. Ekatva launches on August 28, 2026.",
+    "Experience ancient wisdom through modern spiritual guidance. Book pujas, consult AstroGuru, and connect with divine services on Ekatva.",
   image: `${SITE_URL}/assets/hero-bg.png`,
 };
 
