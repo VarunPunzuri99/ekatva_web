@@ -6,7 +6,7 @@ import { Logo } from "@/components/common/Logo";
 import { HOME_NAV } from "@/content/home";
 import { getDownloadAppHref, isExternalAppStoreHref } from "@/lib/appStore";
 import { requestScrollTop } from "@/lib/scrollTop";
-import { easeOutExpo, slideDown } from "@/lib/animations";
+import { easeOutExpo } from "@/lib/animations";
 import { cn } from "@/lib/utils";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 
@@ -27,6 +27,10 @@ export function HomeHeader() {
 
   useEffect(() => {
     setMenuOpen(false);
+    // Re-sync after route change (ScrollToTop may reset scroll asynchronously).
+    setScrolled(window.scrollY > 12);
+    const id = window.setTimeout(() => setScrolled(window.scrollY > 12), 50);
+    return () => window.clearTimeout(id);
   }, [pathname]);
 
   useEffect(() => {
@@ -65,15 +69,16 @@ export function HomeHeader() {
 
   return (
     <>
-      <m.header
-        variants={reduced ? undefined : slideDown}
-        initial={reduced ? false : "hidden"}
-        animate="visible"
+      {/*
+        Plain <header> (no Framer opacity/transform): sticky + Motion transforms
+        break background paint / sticky on some iOS Safari versions.
+      */}
+      <header
         className={cn(
-          "sticky top-0 z-40 border-b transition-[background-color,backdrop-filter,box-shadow,height] duration-300",
+          "sticky top-0 z-40 border-b bg-white transition-[box-shadow,height] duration-300",
           scrolled
-            ? "border-black/8 bg-white/80 shadow-[0_4px_24px_rgba(31,41,55,0.06)] backdrop-blur-md"
-            : "border-black/5 bg-white",
+            ? "border-black/8 shadow-[0_4px_24px_rgba(31,41,55,0.06)]"
+            : "border-black/5",
         )}
       >
         <div
@@ -82,28 +87,22 @@ export function HomeHeader() {
             scrolled ? "h-[64px] xl:h-[68px]" : "h-[72px] xl:h-[80px]",
           )}
         >
-          <m.div
-            initial={reduced ? false : { opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, ease: easeOutExpo, delay: 0.05 }}
+          <Link
+            to="/"
+            className="shrink-0"
+            aria-label="Ekatva home"
+            onClick={onLogoClick}
           >
-            <Link
-              to="/"
-              className="shrink-0"
-              aria-label="Ekatva home"
-              onClick={onLogoClick}
-            >
-              <Logo
-                className="justify-start"
-                imgClassName={cn(
-                  "transition-[height] duration-300",
-                  scrolled
-                    ? "!h-8 sm:!h-9 md:!h-10"
-                    : "!h-9 sm:!h-10 md:!h-11",
-                )}
-              />
-            </Link>
-          </m.div>
+            <Logo
+              className="justify-start"
+              imgClassName={cn(
+                "transition-[height] duration-300",
+                scrolled
+                  ? "!h-8 sm:!h-9 md:!h-10"
+                  : "!h-9 sm:!h-10 md:!h-11",
+              )}
+            />
+          </Link>
 
           <nav
             aria-label="Primary"
@@ -162,7 +161,7 @@ export function HomeHeader() {
             </button>
           </div>
         </div>
-      </m.header>
+      </header>
 
       <AnimatePresence>
         {menuOpen ? (
